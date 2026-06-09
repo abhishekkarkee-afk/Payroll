@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payrun Studio Pro</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-hover: #1e293b;
+            --accent: #0f766e;
+            --accent-hover: #115e59;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --excel-green: #16a34a;
+            --excel-green-hover: #15803d;
+            --badge-48: #e0f2fe;
+            --badge-48-text: #0369a1;
+            --badge-76: #f0fdf4;
+            --badge-76-text: #166534;
+            --warning-bg: #fff7ed;
+            --warning-border: #fed7aa;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .navbar {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .date-banner {
+            background: #e2e8f0;
+            color: var(--primary);
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .date-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .date-btn {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: auto;
+            color: var(--text-main);
+        }
+
+        .date-btn:hover { background: #f1f5f9; }
+
+        .container {
+            max-width: 1500px;
+            margin: 30px auto;
+            padding: 0 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .grid { grid-template-columns: 1fr; }
+            .container { padding: 0 20px; }
+            .navbar, .date-banner { padding: 16px 20px; }
+        }
+
+        .card {
+            background: var(--card);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            height: fit-content;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #94a3b8;
+            box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.1);
+        }
+
+        .utility-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            width: 250px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            width: 160px;
+            padding: 8px;
+            font-size: 0.9rem;
+        }
+
+        .action-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        button:hover { background-color: var(--accent-hover); }
+        
+        button.secondary {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        button.secondary:hover { background-color: #f1f5f9; color: var(--text-main); }
+
+        button.danger-outline {
+            background: transparent;
+            color: #ef4444;
+            border: 1px solid #fee2e2;
+            width: auto;
+        }
+        button.danger-outline:hover { background: #fef2f2; }
+
+        .excel-btn {
+            background-color: var(--excel-green);
+            width: auto;
+        }
+        .excel-btn:hover { background-color: var(--excel-green-hover); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        tr.missing-hours td {
+            background-color: var(--warning-bg);
+        }
+
+        tr:hover td {
+            background-color: #f1f5f9;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-48 { background-color: var(--badge-48); color: var(--badge-48-text); }
+        .badge-76 { background-color: var(--badge-76); color: var(--badge-76-text); }
+
+        .hours-input {
+            width: 80px;
+            padding: 6px;
+            text-align: center;
+            font-weight: 700;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+        
+        .missing-hours .hours-input {
+            border-color: var(--warning-border);
+        }
+
+        .delete-btn {
+            color: #94a3b8;
+            background: none;
+            width: auto;
+            padding: 4px;
+        }
+        .delete-btn:hover { color: #ef4444; background: none; }
+
+        .footer-metrics {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .grand-total {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            background: var(--primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+        }
+
+        .grand-total span { color: #2dd4bf; font-size: 1.3rem; margin-left: 8px;}
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h1>💼 Payrun Studio Pro</h1>
+    <div>Secure Data Engine</div>
+</div>
+
+<div class="date-banner">
+    <div class="date-controls">
+        <button class="date-btn" onclick="shiftFortnight(-1)">← Prev Fortnight</button>
+        <span id="dateRangeDisplay">Loading cycle dates...</span>
+        <button class="date-btn" onclick="shiftFortnight(1)">Next Fortnight →</button>
+    </div>
+    <div>📅 Payment Due: <span id="paymentDateDisplay" style="font-weight: 700; color: var(--accent);">Mon, 15 Jun 2026</span></div>
+</div>
+
+<div class="container">
+    <div class="grid">
+        <div class="card">
+            <h2>1. Manage Roster</h2>
+            <div class="subtitle">Profiles save automatically on this machine.</div>
+            
+            <form id="employeeForm">
+                <div class="form-group">
+                    <label for="empName">Employee Name</label>
+                    <input type="text" id="empName" placeholder="e.g. Michael Chang" required>
+                </div>
+                <div class="form-group">
+                    <label for="empCap">Standard Hours Cap</label>
+                    <select id="empCap">
+                        <option value="48">48 Hours</option>
+                        <option value="76">76 Hours</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rateA">Standard Rate ($/hr)</label>
+                    <input type="number" id="rateA" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="rateB">Remaining Rate ($/hr)</label>
+                    <input type="number" id="rateB" step="0.01" required>
+                </div>
+                <button type="submit">Add to Roster</button>
+            </form>
+            <button class="secondary" onclick="exportBackup()">Save Roster Backup File</button>
+        </div>
+
+        <div class="card">
+            <div class="utility-bar">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="searchBar" class="search-box" placeholder="🔍 Search employee..." oninput="renderTable()">
+                    <select id="filterCap" class="filter-select" onchange="renderTable()">
+                        <option value="all">All Structures</option>
+                        <option value="48">48 Hr Cap Only</option>
+                        <option value="76">76 Hr Cap Only</option>
+                    </select>
+                </div>
+                <div class="action-group">
+                    <button class="danger-outline" onclick="clearAllHours()">Reset Hours</button>
+                    <button class="excel-btn" onclick="exportToExcel()">📊 Export Cycle to Excel</button>
+                </div>
+            </div>
+            
+            <table id="payrunTable">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Cap Structure</th>
+                        <th style="text-align: center;">Total Hours</th>
+                        <th>Standard Pay</th>
+                        <th>Remaining Pay</th>
+                        <th>Gross Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="payrunBody"></tbody>
+            </table>
+
+            <div class="footer-metrics">
+                <div style="font-size: 0.85rem; color: var(--text-muted);">
+                    ⚠️ <span style="background-color: var(--warning-bg); padding: 2px 4px; border-radius: 4px; color:#c2410c;">Orange rows</span> indicate missing hour fields.
+                </div>
+                <div class="grand-total">
+                    Fortnightly Total:<span id="totalNum">$0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = 'payrun_app_employees_v4';
+    let employees = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    
+    // Anchor payment date tracking: Target Monday, June 15, 2026
+    let basePayDate = new Date(2026, 5, 15); 
+
+    function calculateDates() {
+        let startPeriod = new Date(basePayDate);
+        startPeriod.setDate(basePayDate.getDate() - 14); 
+        let endPeriod = new Date(basePayDate);
+        endPeriod.setDate(basePayDate.getDate() - 1);
+
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        document.getElementById('dateRangeDisplay').innerText = `Work Period: ${startPeriod.toLocaleDateString('en-AU', options)} to ${endPeriod.toLocaleDateString('en-AU', options)}`;
+        document.getElementById('paymentDateDisplay').innerText = basePayDate.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function shiftFortnight(direction) {
+        basePayDate.setDate(basePayDate.getDate() + (direction * 14));
+        calculateDates();
+    }
+
+    document.getElementById('employeeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const newEmp = {
+            id: Date.now(),
+            name: document.getElementById('empName').value.trim(),
+            cap: parseInt(document.getElementById('empCap').value),
+            rateA: parseFloat(document.getElementById('rateA').value),
+            rateB: parseFloat(document.getElementById('rateB').value),
+            currentHours: ""
+        };
+        employees.push(newEmp);
+        saveAndRender();
+        document.getElementById('employeeForm').reset();
+    });
+
+    function saveAndRender() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
+        renderTable();
+    }
+
+    function deleteEmployee(id) {
+        if(confirm("Remove this profile permanently from roster?")) {
+            employees = employees.filter(emp => emp.id !== id);
+            saveAndRender();
+        }
+    }
+
+    function clearAllHours() {
+        if(confirm("Clear out everyone's input hours for the current cycle?")) {
+            employees.forEach(emp => emp.currentHours = "");
+            saveAndRender();
+        }
+    }
+
+    function updateHours(id, value) {
+        const emp = employees.find(e => e.id === id);
+        if(emp) {
+            emp.currentHours = value === "" ? "" : parseFloat(value);
+            
+            const tr = document.getElementById(`row_${id}`);
+            if (value === "") {
+                tr.classList.add('missing-hours');
+            } else {
+                tr.classList.remove('missing-hours');
+            }
+            
+            calculateRowPay(emp);
+        }
+    }
+
+    function calculateRowPay(emp) {
+        const hours = emp.currentHours === "" ? 0 : emp.currentHours;
+        const standardHours = Math.min(hours, emp.cap);
+        const remainingHours = Math.max(0, hours - emp.cap);
+        
+        const payStandard = standardHours * emp.rateA;
+        const payRemaining = remainingHours * emp.rateB;
+        const gross = payStandard + payRemaining;
+
+        document.getElementById(`payStandard_${emp.id}`).innerText = `$${payStandard.toFixed(2)}`;
+        document.getElementById(`payRemaining_${emp.id}`).innerText = `$${payRemaining.toFixed(2)}`;
+        document.getElementById(`gross_${emp.id}`).innerText = `$${gross.toFixed(2)}`;
+
+        updateGrandTotal();
+    }
+
+    function updateGrandTotal() {
+        let grandTotal = 0;
+        employees.forEach(emp => {
+            const hours = emp.currentHours === "" ? 0 : emp.currentHours;
+            const standardHours = Math.min(hours, emp.cap);
+            const remainingHours = Math.max(0, hours - emp.cap);
+            grandTotal += (standardHours * emp.rateA) + (remainingHours * emp.rateB);
+        });
+        document.getElementById('totalNum').innerText = `$${grandTotal.toFixed(2)}`;
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('payrunBody');
+        tbody.innerHTML = '';
+
+        const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+        const capFilter = document.getElementById('filterCap').value;
+
+        let filtered = employees.filter(emp => {
+            const matchesSearch = emp.name.toLowerCase().includes(searchTerm);
+            const matchesCap = (capFilter === 'all') || (emp.cap.toString() === capFilter);
+            return matchesSearch && matchesCap;
+        });
+
+        if(filtered.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:24px;">No matching roster records discovered.</td></tr>`;
+            updateGrandTotal();
+            return;
+        }
+
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+        filtered.forEach(emp => {
+            const tr = document.createElement('tr');
+            tr.id = `row_${emp.id}`;
+            if (emp.currentHours === "") tr.className = 'missing-hours';
+            
+            const hours = emp.currentHours === "" ? 0 : emp.currentHours;
+            const standardHours = Math.min(hours, emp.cap);
+            const remainingHours = Math.max(0, hours - emp.cap);
+            const payStandard = standardHours * emp.rateA;
+            const payRemaining = remainingHours * emp.rateB;
+            const gross = payStandard + payRemaining;
+
+            tr.innerHTML = `
+                <td>
+                    <div style="font-weight: 600;">${emp.name}</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">Std: $${emp.rateA.toFixed(2)} | Rem: $${emp.rateB.toFixed(2)}</div>
+                </td>
+                <td><span class="badge ${emp.cap === 48 ? 'badge-48' : 'badge-76'}">${emp.cap} hr Cap</span></td>
+                <td style="text-align: center;">
+                    <input type="number" class="hours-input" step="0.1" value="${emp.currentHours}" placeholder="-" oninput="updateHours(${emp.id}, this.value)">
+                </td>
+                <td id="payStandard_${emp.id}">$${payStandard.toFixed(2)}</td>
+                <td id="payRemaining_${emp.id}">$${payRemaining.toFixed(2)}</td>
+                <td id="gross_${emp.id}" style="font-weight:700; color:var(--primary);">$${gross.toFixed(2)}</td>
+                <td>
+                    <button class="delete-btn" onclick="deleteEmployee(${emp.id})">✕</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+        updateGrandTotal();
+    }
+
+    function exportToExcel() {
+        if (employees.length === 0) return alert("No operational data to export.");
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += `Payrun Report, Payment Due Date: ${basePayDate.toDateString()}\r\n`;
+        csvContent += "Employee Name,Cap Structure,Total Hours,Standard Pay,Remaining Pay,Gross Total\r\n";
+        
+        employees.forEach(emp => {
+            const hours = emp.currentHours === "" ? 0 : emp.currentHours;
+            const standardHours = Math.min(hours, emp.cap);
+            const remainingHours = Math.max(0, hours - emp.cap);
+            const payStandard = (standardHours * emp.rateA).toFixed(2);
+            const payRemaining = (remainingHours * emp.rateB).toFixed(2);
+            const gross = (parseFloat(payStandard) + parseFloat(payRemaining)).toFixed(2);
+            csvContent += `"${emp.name}",${emp.cap} Hours,${hours},${payStandard},${payRemaining},${gross}\r\n`;
+        });
+        
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `payrun_summary_${basePayDate.toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
+
+    function exportBackup() {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(employees, null, 2));
+        const anchor = document.createElement('a');
+        anchor.setAttribute("href", dataStr);
+        anchor.setAttribute("download", "roster_backup.json");
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+    }
+
+    calculateDates();
+    renderTable();
+</script>
+</body>
+</html>
