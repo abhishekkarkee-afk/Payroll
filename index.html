@@ -3,578 +3,622 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payrun Studio Pro</title>
+    <title>Fortnightly Payrun Engine</title>
     <style>
         :root {
-            --primary: #0f172a;
-            --primary-hover: #1e293b;
-            --accent: #0f766e;
-            --accent-hover: #115e59;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text-main: #0f172a;
+            --bg-app: #090d16;
+            --bg-surface: #131b2e;
+            --bg-field: #090d16;
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.15);
+            --accent: #2dd4bf;
+            --accent-glow: rgba(45, 212, 191, 0.15);
+            --danger: #f43f5e;
+            --text-main: #f8fafc;
             --text-muted: #64748b;
-            --border: #e2e8f0;
-            --excel-green: #16a34a;
-            --excel-green-hover: #15803d;
-            --badge-48: #e0f2fe;
-            --badge-48-text: #0369a1;
-            --badge-76: #f0fdf4;
-            --badge-76-text: #166534;
-            --warning-bg: #fff7ed;
-            --warning-border: #fed7aa;
+            --border: #1e293b;
+            --radius: 12px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
+            background-color: var(--bg-app);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-        }
-
-        .navbar {
-            background-color: var(--primary);
-            color: white;
-            padding: 16px 40px;
+            padding: 40px 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, var(--bg-app) 70%);
         }
-
-        .navbar h1 {
-            margin: 0;
-            font-size: 1.35rem;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-        }
-
-        .date-banner {
-            background: #e2e8f0;
-            color: var(--primary);
-            padding: 12px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .date-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .date-btn {
-            background: #fff;
-            border: 1px solid var(--border);
-            padding: 4px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            width: auto;
-            color: var(--text-main);
-        }
-
-        .date-btn:hover { background: #f1f5f9; }
 
         .container {
-            max-width: 1500px;
-            margin: 30px auto;
-            padding: 0 40px;
+            background: var(--bg-surface);
+            max-width: 620px;
+            width: 100%;
+            padding: 35px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 340px 1fr;
-            gap: 30px;
+        header {
+            margin-bottom: 25px;
+            text-align: center;
         }
 
-        @media (max-width: 1100px) {
-            .grid { grid-template-columns: 1fr; }
-            .container { padding: 0 20px; }
-            .navbar, .date-banner { padding: 16px 20px; }
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
         }
 
-        .card {
-            background: var(--card);
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05);
+        /* Interactive Date Picker Bar */
+        .date-picker-grid {
+            background: rgba(9, 13, 22, 0.6);
             border: 1px solid var(--border);
-            height: fit-content;
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
-        h2 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-top: 0;
-            margin-bottom: 4px;
+        .date-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
         }
 
-        .subtitle {
-            font-size: 0.85rem;
+        .date-group label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             color: var(--text-muted);
-            margin-bottom: 20px;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .date-group input[type="date"] {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .card-section {
+            background: rgba(9, 13, 22, 0.3);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: var(--transition);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-primary { 
+            background: #0284c7; 
+            color: white; 
+            flex: 2;
+        }
+        .btn-primary:hover { background: #0369a1; }
+        
+        .btn-danger { 
+            background: transparent; 
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        .btn-danger:hover { 
+            background: rgba(244, 63, 94, 0.1); 
+            color: var(--danger);
+            border-color: rgba(244, 63, 94, 0.2);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 0.8rem;
-            color: #475569;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 13px;
         }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-prefix, .input-suffix {
+            position: absolute;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+            pointer-events: none;
+        }
+        .input-prefix { left: 14px; }
+        .input-suffix { right: 14px; }
 
         input, select {
             width: 100%;
-            padding: 10px;
+            padding: 11px 14px;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 0.95rem;
-            transition: all 0.2s;
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--text-main);
+            background-color: var(--bg-field);
+            transition: var(--transition);
         }
+        
+        .has-prefix input { padding-left: 28px; }
+        .has-suffix input { padding-right: 45px; }
 
         input:focus, select:focus {
             outline: none;
-            border-color: #94a3b8;
-            box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
         }
 
-        .utility-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
+        .radio-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
-        .search-box {
-            width: 250px;
-            padding: 8px 12px;
-            font-size: 0.9rem;
-        }
-
-        .filter-select {
-            width: 160px;
-            padding: 8px;
-            font-size: 0.9rem;
-        }
-
-        .action-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            width: 100%;
-        }
-
-        button:hover { background-color: var(--accent-hover); }
-        
-        button.secondary {
-            background-color: transparent;
-            color: var(--text-muted);
+        .radio-label {
             border: 1px solid var(--border);
-        }
-        button.secondary:hover { background-color: #f1f5f9; color: var(--text-main); }
-
-        button.danger-outline {
-            background: transparent;
-            color: #ef4444;
-            border: 1px solid #fee2e2;
-            width: auto;
-        }
-        button.danger-outline:hover { background: #fef2f2; }
-
-        .excel-btn {
-            background-color: var(--excel-green);
-            width: auto;
-        }
-        .excel-btn:hover { background-color: var(--excel-green-hover); }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
             padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 13px;
+            background: var(--bg-field);
+            transition: var(--transition);
             color: var(--text-muted);
+        }
+
+        input[type="radio"] { display: none; }
+
+        input[type="radio"]:checked + .radio-label {
+            background: var(--primary-glow);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .hidden { display: none !important; }
+
+        /* Focused Live Counters */
+        .results {
+            margin-top: 15px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+        }
+
+        .results h2 {
+            font-size: 12px;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            border-bottom: 2px solid var(--border);
         }
 
-        td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.95rem;
+        .live-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
-        tr.missing-hours td {
-            background-color: var(--warning-bg);
+        .stat-box {
+            background: rgba(9, 13, 22, 0.4);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
         }
 
-        tr:hover td {
-            background-color: #f1f5f9;
+        .stat-box:hover {
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
-        .badge {
-            padding: 4px 8px;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
+        .stat-box.premium-active {
+            background: linear-gradient(135deg, rgba(45, 212, 191, 0.02) 0%, rgba(45, 212, 191, 0.08) 100%);
+            border-color: rgba(45, 212, 191, 0.3);
         }
-        .badge-48 { background-color: var(--badge-48); color: var(--badge-48-text); }
-        .badge-76 { background-color: var(--badge-76); color: var(--badge-76-text); }
 
-        .hours-input {
-            width: 80px;
-            padding: 6px;
-            text-align: center;
+        .stat-box label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            letter-spacing: 0.02em;
+        }
+
+        .stat-val {
+            font-size: 24px;
             font-weight: 700;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-        }
-        
-        .missing-hours .hours-input {
-            border-color: var(--warning-border);
+            color: var(--text-main);
+            margin-bottom: 4px;
         }
 
-        .delete-btn {
-            color: #94a3b8;
-            background: none;
-            width: auto;
-            padding: 4px;
-        }
-        .delete-btn:hover { color: #ef4444; background: none; }
-
-        .footer-metrics {
-            margin-top: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border);
-            padding-top: 20px;
+        .stat-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
-        .grand-total {
-            font-size: 1.1rem;
+        .premium-active .stat-val { color: var(--accent); }
+        .premium-active .stat-sub { color: rgba(45, 212, 191, 0.8); }
+
+        .alert-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(45, 212, 191, 0.15);
+            color: var(--accent);
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
             font-weight: 700;
-            color: white;
-            background: var(--primary);
-            padding: 12px 24px;
-            border-radius: 8px;
+            text-transform: uppercase;
         }
-
-        .grand-total span { color: #2dd4bf; font-size: 1.3rem; margin-left: 8px;}
     </style>
 </head>
 <body>
 
-<div class="navbar">
-    <h1>💼 Payrun Studio Pro</h1>
-    <div>Secure Data Engine</div>
-</div>
-
-<div class="date-banner">
-    <div class="date-controls">
-        <button class="date-btn" onclick="shiftFortnight(-1)">← Prev Fortnight</button>
-        <span id="dateRangeDisplay">Loading cycle dates...</span>
-        <button class="date-btn" onclick="shiftFortnight(1)">Next Fortnight →</button>
-    </div>
-    <div>📅 Payment Due: <span id="paymentDateDisplay" style="font-weight: 700; color: var(--accent);">Mon, 15 Jun 2026</span></div>
-</div>
-
 <div class="container">
-    <div class="grid">
-        <div class="card">
-            <h2>1. Manage Roster</h2>
-            <div class="subtitle">Profiles save automatically on this machine.</div>
-            
-            <form id="employeeForm">
-                <div class="form-group">
-                    <label for="empName">Employee Name</label>
-                    <input type="text" id="empName" placeholder="e.g. Michael Chang" required>
-                </div>
-                <div class="form-group">
-                    <label for="empCap">Standard Hours Cap</label>
-                    <select id="empCap">
-                        <option value="48">48 Hours</option>
-                        <option value="76">76 Hours</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="rateA">Standard Rate ($/hr)</label>
-                    <input type="number" id="rateA" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="rateB">Remaining Rate ($/hr)</label>
-                    <input type="number" id="rateB" step="0.01" required>
-                </div>
-                <button type="submit">Add to Roster</button>
-            </form>
-            <button class="secondary" onclick="exportBackup()">Save Roster Backup File</button>
+    <header>
+        <h1>Payrun Calculations</h1>
+        
+        <div class="date-picker-grid">
+            <div class="date-group">
+                <label for="date-start">Fortnight Start Date</label>
+                <input type="date" id="date-start">
+            </div>
+            <div class="date-group">
+                <label for="date-end">Pay Release Date</label>
+                <input type="date" id="date-end">
+            </div>
+        </div>
+    </header>
+
+    <div class="card-section">
+        <div class="section-title">Saved Employee Roster</div>
+        <div class="profile-layout">
+            <select id="profile-select">
+                <option value="">-- Choose Profile --</option>
+            </select>
+            <input type="text" id="employee-name" placeholder="New Profile Name">
+        </div>
+        <div class="profile-actions">
+            <button class="btn btn-primary" id="btn-save">Save Profile Settings</button>
+            <button class="btn btn-danger" id="btn-delete">Delete</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Pay Structure Selection</label>
+        <div class="radio-group">
+            <input type="radio" id="type-standard" name="payType" value="standard" checked>
+            <label for="type-standard" class="radio-label">Standard + Premium Tier</label>
+
+            <input type="radio" id="type-flat" name="payType" value="flat">
+            <label for="type-flat" class="radio-label">Continuous Flat Rate</label>
+        </div>
+    </div>
+
+    <div class="form-grid">
+        <div class="form-group">
+            <label for="hours-worked">Total Fortnightly Hours</label>
+            <div class="input-wrapper has-suffix">
+                <input type="number" id="hours-worked" min="0" step="0.5" placeholder="0.00">
+                <span class="input-suffix">hrs</span>
+            </div>
         </div>
 
-        <div class="card">
-            <div class="utility-bar">
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="searchBar" class="search-box" placeholder="🔍 Search employee..." oninput="renderTable()">
-                    <select id="filterCap" class="filter-select" onchange="renderTable()">
-                        <option value="all">All Structures</option>
-                        <option value="48">48 Hr Cap Only</option>
-                        <option value="76">76 Hr Cap Only</option>
-                    </select>
-                </div>
-                <div class="action-group">
-                    <button class="danger-outline" onclick="clearAllHours()">Reset Hours</button>
-                    <button class="excel-btn" onclick="exportToExcel()">📊 Export Cycle to Excel</button>
-                </div>
+        <div class="form-group">
+            <label for="base-rate">Standard Hourly Rate</label>
+            <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="number" id="base-rate" min="0" step="0.01" placeholder="0.00">
             </div>
-            
-            <table id="payrunTable">
-                <thead>
-                    <tr>
-                        <th>Employee</th>
-                        <th>Cap Structure</th>
-                        <th style="text-align: center;">Total Hours</th>
-                        <th>Standard Pay</th>
-                        <th>Remaining Pay</th>
-                        <th>Gross Total</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="payrunBody"></tbody>
-            </table>
+        </div>
+    </div>
 
-            <div class="footer-metrics">
-                <div style="font-size: 0.85rem; color: var(--text-muted);">
-                    ⚠️ <span style="background-color: var(--warning-bg); padding: 2px 4px; border-radius: 4px; color:#c2410c;">Orange rows</span> indicate missing hour fields.
-                </div>
-                <div class="grand-total">
-                    Fortnightly Total:<span id="totalNum">$0.00</span>
-                </div>
+    <div id="standard-fields" class="form-grid">
+        <div class="form-group">
+            <label for="standard-cutoff">Ordinary Hours Cap</label>
+            <select id="standard-cutoff">
+                <option value="76">76 Hours Threshold</option>
+                <option value="48">48 Hours Threshold</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="ot-rate">Premium Hourly Rate</label>
+            <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="number" id="ot-rate" min="0" step="0.01" placeholder="0.00">
+            </div>
+        </div>
+    </div>
+
+    <div class="results">
+        <h2>Live Hours & Financial Split</h2>
+        <div class="live-matrix">
+            <div class="stat-box" id="box-ordinary">
+                <label>Ordinary Allocation</label>
+                <div class="stat-val" id="lbl-ord-hours">0 hrs</div>
+                <div class="stat-sub" id="lbl-ord-pay">$0.00 base</div>
+            </div>
+
+            <div class="stat-box" id="box-premium">
+                <div class="alert-badge hidden" id="badge-premium">Active</div>
+                <label>Premium Allocation</label>
+                <div class="stat-val" id="lbl-prem-hours">0 hrs</div>
+                <div class="stat-sub" id="lbl-prem-pay">$0.00 accrued</div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    const STORAGE_KEY = 'payrun_app_employees_v4';
-    let employees = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    
-    // Anchor payment date tracking: Target Monday, June 15, 2026
-    let basePayDate = new Date(2026, 5, 15); 
+    const elements = {
+        dateStart: document.getElementById('date-start'),
+        dateEnd: document.getElementById('date-end'),
+        profileSelect: document.getElementById('profile-select'),
+        employeeName: document.getElementById('employee-name'),
+        btnSave: document.getElementById('btn-save'),
+        btnDelete: document.getElementById('btn-delete'),
+        typeStandard: document.getElementById('type-standard'),
+        typeFlat: document.getElementById('type-flat'),
+        hoursWorked: document.getElementById('hours-worked'),
+        baseRate: document.getElementById('base-rate'),
+        standardFields: document.getElementById('standard-fields'),
+        standardCutoff: document.getElementById('standard-cutoff'),
+        otRate: document.getElementById('ot-rate'),
+        boxOrdinary: document.getElementById('box-ordinary'),
+        boxPremium: document.getElementById('box-premium'),
+        badgePremium: document.getElementById('badge-premium'),
+        lblOrdHours: document.getElementById('lbl-ord-hours'),
+        lblOrdPay: document.getElementById('lbl-ord-pay'),
+        lblPremHours: document.getElementById('lbl-prem-hours'),
+        lblPremPay: document.getElementById('lbl-prem-pay')
+    };
 
-    function calculateDates() {
-        let startPeriod = new Date(basePayDate);
-        startPeriod.setDate(basePayDate.getDate() - 14); 
-        let endPeriod = new Date(basePayDate);
-        endPeriod.setDate(basePayDate.getDate() - 1);
+    // Calculate default rolling fortnightly dates based on Monday, June 15, 2026
+    function initDefaultDates() {
+        const payDay = new Date('2026-06-15');
+        const startDay = new Date(payDay);
+        startDay.setDate(payDay.getDate() - 13); // 14-day calculation window window
 
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        document.getElementById('dateRangeDisplay').innerText = `Work Period: ${startPeriod.toLocaleDateString('en-AU', options)} to ${endPeriod.toLocaleDateString('en-AU', options)}`;
-        document.getElementById('paymentDateDisplay').innerText = basePayDate.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+        elements.dateStart.value = startDay.toISOString().split('T')[0];
+        elements.dateEnd.value = payDay.toISOString().split('T')[0];
     }
 
-    function shiftFortnight(direction) {
-        basePayDate.setDate(basePayDate.getDate() + (direction * 14));
-        calculateDates();
-    }
+    function toggleFields() {
+        const isStandard = elements.typeStandard.checked;
 
-    document.getElementById('employeeForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const newEmp = {
-            id: Date.now(),
-            name: document.getElementById('empName').value.trim(),
-            cap: parseInt(document.getElementById('empCap').value),
-            rateA: parseFloat(document.getElementById('rateA').value),
-            rateB: parseFloat(document.getElementById('rateB').value),
-            currentHours: ""
-        };
-        employees.push(newEmp);
-        saveAndRender();
-        document.getElementById('employeeForm').reset();
-    });
-
-    function saveAndRender() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
-        renderTable();
-    }
-
-    function deleteEmployee(id) {
-        if(confirm("Remove this profile permanently from roster?")) {
-            employees = employees.filter(emp => emp.id !== id);
-            saveAndRender();
+        if (isStandard) {
+            elements.standardFields.classList.remove('hidden');
+            elements.boxPremium.classList.remove('hidden');
+        } else {
+            elements.standardFields.classList.add('hidden');
+            elements.boxPremium.classList.add('hidden');
         }
+        calculatePay();
     }
 
-    function clearAllHours() {
-        if(confirm("Clear out everyone's input hours for the current cycle?")) {
-            employees.forEach(emp => emp.currentHours = "");
-            saveAndRender();
-        }
-    }
+    function calculatePay() {
+        const payType = document.querySelector('input[name="payType"]:checked').value;
+        const totalHours = Math.max(0, parseFloat(elements.hoursWorked.value) || 0);
+        const baseRate = Math.max(0, parseFloat(elements.baseRate.value) || 0);
 
-    function updateHours(id, value) {
-        const emp = employees.find(e => e.id === id);
-        if(emp) {
-            emp.currentHours = value === "" ? "" : parseFloat(value);
-            
-            const tr = document.getElementById(`row_${id}`);
-            if (value === "") {
-                tr.classList.add('missing-hours');
+        let ordHours = 0;
+        let ordPay = 0;
+        let premHours = 0;
+        let premPay = 0;
+
+        if (payType === 'standard') {
+            const cutoff = parseFloat(elements.standardCutoff.value);
+            const otRate = Math.max(0, parseFloat(elements.otRate.value) || 0);
+
+            if (totalHours <= cutoff) {
+                ordHours = totalHours;
+                premHours = 0;
             } else {
-                tr.classList.remove('missing-hours');
+                ordHours = cutoff;
+                premHours = totalHours - cutoff;
             }
+
+            ordPay = ordHours * baseRate;
+            premPay = premHours * otRate;
+
+            // Dynamic Styling Feedback for Premium Allocation
+            if (premHours > 0) {
+                elements.boxPremium.classList.add('premium-active');
+                elements.badgePremium.classList.remove('hidden');
+            } else {
+                elements.boxPremium.classList.remove('premium-active');
+                elements.badgePremium.classList.add('hidden');
+            }
+
+            elements.lblPremHours.innerText = `${premHours} hrs`;
+            elements.lblPremPay.innerText = `$${premPay.toFixed(2)} accrued`;
+        } else {
+            ordHours = totalHours;
+            ordPay = ordHours * baseRate;
             
-            calculateRowPay(emp);
+            elements.boxPremium.classList.remove('premium-active');
+            elements.badgePremium.classList.add('hidden');
+            elements.lblPremHours.innerText = `0 hrs`;
+            elements.lblPremPay.innerText = `$0.00 accrued`;
         }
+
+        elements.lblOrdHours.innerText = `${ordHours} hrs`;
+        elements.lblOrdPay.innerText = `$${ordPay.toFixed(2)} base`;
     }
 
-    function calculateRowPay(emp) {
-        const hours = emp.currentHours === "" ? 0 : emp.currentHours;
-        const standardHours = Math.min(hours, emp.cap);
-        const remainingHours = Math.max(0, hours - emp.cap);
+    function getProfiles() {
+        const stored = localStorage.getItem('payroll_profiles_v4');
+        return stored ? JSON.parse(stored) : {};
+    }
+
+    function renderProfileDropdown() {
+        const profiles = getProfiles();
+        elements.profileSelect.innerHTML = '<option value="">-- Choose Profile --</option>';
         
-        const payStandard = standardHours * emp.rateA;
-        const payRemaining = remainingHours * emp.rateB;
-        const gross = payStandard + payRemaining;
-
-        document.getElementById(`payStandard_${emp.id}`).innerText = `$${payStandard.toFixed(2)}`;
-        document.getElementById(`payRemaining_${emp.id}`).innerText = `$${payRemaining.toFixed(2)}`;
-        document.getElementById(`gross_${emp.id}`).innerText = `$${gross.toFixed(2)}`;
-
-        updateGrandTotal();
+        Object.keys(profiles).sort().forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            elements.profileSelect.appendChild(opt);
+        });
     }
 
-    function updateGrandTotal() {
-        let grandTotal = 0;
-        employees.forEach(emp => {
-            const hours = emp.currentHours === "" ? 0 : emp.currentHours;
-            const standardHours = Math.min(hours, emp.cap);
-            const remainingHours = Math.max(0, hours - emp.cap);
-            grandTotal += (standardHours * emp.rateA) + (remainingHours * emp.rateB);
-        });
-        document.getElementById('totalNum').innerText = `$${grandTotal.toFixed(2)}`;
-    }
-
-    function renderTable() {
-        const tbody = document.getElementById('payrunBody');
-        tbody.innerHTML = '';
-
-        const searchTerm = document.getElementById('searchBar').value.toLowerCase();
-        const capFilter = document.getElementById('filterCap').value;
-
-        let filtered = employees.filter(emp => {
-            const matchesSearch = emp.name.toLowerCase().includes(searchTerm);
-            const matchesCap = (capFilter === 'all') || (emp.cap.toString() === capFilter);
-            return matchesSearch && matchesCap;
-        });
-
-        if(filtered.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:24px;">No matching roster records discovered.</td></tr>`;
-            updateGrandTotal();
+    function saveProfile() {
+        const name = elements.employeeName.value.trim();
+        if (!name) {
+            alert('Please assign an employee name identifier to save.');
             return;
         }
 
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        const profiles = getProfiles();
+        profiles[name] = {
+            payType: document.querySelector('input[name="payType"]:checked').value,
+            hoursWorked: elements.hoursWorked.value,
+            baseRate: elements.baseRate.value,
+            standardCutoff: elements.standardCutoff.value,
+            otRate: elements.otRate.value,
+            dateStart: elements.dateStart.value,
+            dateEnd: elements.dateEnd.value
+        };
 
-        filtered.forEach(emp => {
-            const tr = document.createElement('tr');
-            tr.id = `row_${emp.id}`;
-            if (emp.currentHours === "") tr.className = 'missing-hours';
+        localStorage.setItem('payroll_profiles_v4', JSON.stringify(profiles));
+        renderProfileDropdown();
+        elements.profileSelect.value = name;
+    }
+
+    function loadProfile() {
+        const selectedName = elements.profileSelect.value;
+        if (!selectedName) return;
+
+        const profiles = getProfiles();
+        const profile = profiles[selectedName];
+
+        if (profile) {
+            elements.employeeName.value = selectedName;
+            if (profile.payType === 'standard') {
+                elements.typeStandard.checked = true;
+            } else {
+                elements.typeFlat.checked = true;
+            }
             
-            const hours = emp.currentHours === "" ? 0 : emp.currentHours;
-            const standardHours = Math.min(hours, emp.cap);
-            const remainingHours = Math.max(0, hours - emp.cap);
-            const payStandard = standardHours * emp.rateA;
-            const payRemaining = remainingHours * emp.rateB;
-            const gross = payStandard + payRemaining;
-
-            tr.innerHTML = `
-                <td>
-                    <div style="font-weight: 600;">${emp.name}</div>
-                    <div style="font-size:0.75rem; color:var(--text-muted);">Std: $${emp.rateA.toFixed(2)} | Rem: $${emp.rateB.toFixed(2)}</div>
-                </td>
-                <td><span class="badge ${emp.cap === 48 ? 'badge-48' : 'badge-76'}">${emp.cap} hr Cap</span></td>
-                <td style="text-align: center;">
-                    <input type="number" class="hours-input" step="0.1" value="${emp.currentHours}" placeholder="-" oninput="updateHours(${emp.id}, this.value)">
-                </td>
-                <td id="payStandard_${emp.id}">$${payStandard.toFixed(2)}</td>
-                <td id="payRemaining_${emp.id}">$${payRemaining.toFixed(2)}</td>
-                <td id="gross_${emp.id}" style="font-weight:700; color:var(--primary);">$${gross.toFixed(2)}</td>
-                <td>
-                    <button class="delete-btn" onclick="deleteEmployee(${emp.id})">✕</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-        updateGrandTotal();
+            elements.hoursWorked.value = profile.hoursWorked;
+            elements.baseRate.value = profile.baseRate;
+            elements.standardCutoff.value = profile.standardCutoff;
+            elements.otRate.value = profile.otRate || '';
+            if (profile.dateStart) elements.dateStart.value = profile.dateStart;
+            if (profile.dateEnd) elements.dateEnd.value = profile.dateEnd;
+            
+            toggleFields();
+        }
     }
 
-    function exportToExcel() {
-        if (employees.length === 0) return alert("No operational data to export.");
-        let csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += `Payrun Report, Payment Due Date: ${basePayDate.toDateString()}\r\n`;
-        csvContent += "Employee Name,Cap Structure,Total Hours,Standard Pay,Remaining Pay,Gross Total\r\n";
-        
-        employees.forEach(emp => {
-            const hours = emp.currentHours === "" ? 0 : emp.currentHours;
-            const standardHours = Math.min(hours, emp.cap);
-            const remainingHours = Math.max(0, hours - emp.cap);
-            const payStandard = (standardHours * emp.rateA).toFixed(2);
-            const payRemaining = (remainingHours * emp.rateB).toFixed(2);
-            const gross = (parseFloat(payStandard) + parseFloat(payRemaining)).toFixed(2);
-            csvContent += `"${emp.name}",${emp.cap} Hours,${hours},${payStandard},${payRemaining},${gross}\r\n`;
-        });
-        
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `payrun_summary_${basePayDate.toISOString().slice(0,10)}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+    function deleteProfile() {
+        const selectedName = elements.profileSelect.value;
+        if (!selectedName) return;
+
+        if (confirm(`Remove profile roster record for "${selectedName}"?`)) {
+            const profiles = getProfiles();
+            delete profiles[selectedName];
+            localStorage.setItem('payroll_profiles_v4', JSON.stringify(profiles));
+            
+            elements.employeeName.value = '';
+            elements.hoursWorked.value = '';
+            elements.baseRate.value = '';
+            elements.otRate.value = '';
+            initDefaultDates();
+            
+            renderProfileDropdown();
+            toggleFields();
+        }
     }
 
-    function exportBackup() {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(employees, null, 2));
-        const anchor = document.createElement('a');
-        anchor.setAttribute("href", dataStr);
-        anchor.setAttribute("download", "roster_backup.json");
-        document.body.appendChild(anchor);
-        anchor.click();
-        anchor.remove();
+    function initEvents() {
+        elements.typeStandard.addEventListener('click', toggleFields);
+        elements.typeFlat.addEventListener('click', toggleFields);
+        elements.hoursWorked.addEventListener('input', calculatePay);
+        elements.baseRate.addEventListener('input', calculatePay);
+        elements.otRate.addEventListener('input', calculatePay);
+        elements.standardCutoff.addEventListener('change', calculatePay);
+        elements.profileSelect.addEventListener('change', loadProfile);
+        elements.btnSave.addEventListener('click', saveProfile);
+        elements.btnDelete.addEventListener('click', deleteProfile);
     }
 
-    calculateDates();
-    renderTable();
+    initDefaultDates();
+    renderProfileDropdown();
+    initEvents();
+    toggleFields();
 </script>
+
 </body>
 </html>
