@@ -23,7 +23,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
@@ -71,7 +71,7 @@
         }
 
         th, td {
-            padding: 0.75rem;
+            padding: 0.6rem;
             border: 1px solid var(--border);
             text-align: left;
         }
@@ -98,6 +98,8 @@
 
         .btn-danger {
             background-color: #ef4444;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.85rem;
         }
         .btn-danger:hover {
             background-color: #dc2626;
@@ -114,6 +116,12 @@
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
+            position: sticky;
+            bottom: 10px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            border-radius: 6px;
         }
 
         .summary-box {
@@ -123,6 +131,11 @@
             border-radius: 6px;
             margin-top: 1.5rem;
         }
+        
+        .emp-name-input {
+            font-weight: 600;
+            width: 180px;
+        }
     </style>
 </head>
 <body>
@@ -130,6 +143,7 @@
 <div class="container">
     <h1>Fortnightly Bulk Payrun Engine</h1>
     
+    <!-- Payrun Meta Details -->
     <div class="card">
         <h2>Payrun Settings</h2>
         <div class="meta-grid">
@@ -144,88 +158,132 @@
         </div>
     </div>
 
+    <!-- Employee Roster Table Input -->
     <div class="card">
         <h2>Employee Payroll Roster</h2>
-        <table id="rosterTable">
-            <thead>
-                <tr>
-                    <th>Employee Name</th>
-                    <th>Pay Structure</th>
-                    <th>Total Hours</th>
-                    <th>Std Rate ($)</th>
-                    <th>Prem Rate ($)</th>
-                    <th>Cap Threshold</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="rosterBody">
-                <tr>
-                    <td><input type="text" class="emp-name" value="Employee 1" placeholder="Name"></td>
-                    <td>
-                        <select class="pay-structure">
-                            <option value="tiered">Standard + Premium Tier</option>
-                            <option value="flat">Continuous Flat Rate</option>
-                        </select>
-                    </td>
-                    <td><input type="number" class="emp-hours" value="80" step="0.1" style="width: 70px;"></td>
-                    <td><input type="number" class="std-rate" value="30" step="0.01" style="width: 70px;"></td>
-                    <td><input type="number" class="prem-rate" value="45" step="0.01" style="width: 70px;"></td>
-                    <td>
-                        <select class="cap-threshold">
-                            <option value="76">76 Hours Cap</option>
-                            <option value="48">48 Hours Cap</option>
-                        </select>
-                    </td>
-                    <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete</button></td>
-                </tr>
-            </tbody>
-        </table>
+        <div style="overflow-x: auto;">
+            <table id="rosterTable">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Pay Structure</th>
+                        <th>Total Hours</th>
+                        <th>Std Rate ($)</th>
+                        <th>Prem Rate ($)</th>
+                        <th>Cap Threshold</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="rosterBody">
+                    <!-- Preloaded Team List -->
+                    <script>
+                        const teamData = [
+                            { name: "Nippu Pokhrel", structure: "tiered", hours: 0, std: 35, prem: 25, cap: 76 },
+                            { name: "Abhishek Karki", structure: "tiered", hours: 0, std: 34, prem: 25, cap: 76 },
+                            { name: "Nabina Thakuri", structure: "tiered", hours: 0, std: 0, prem: 0, cap: 76 },
+                            { name: "Sami Basnet", structure: "flat", hours: 0, std: 24, prem: 0, cap: 76 },
+                            { name: "Musica Karki", structure: "tiered", hours: 0, std: 30, prem: 25, cap: 48 },
+                            { name: "Sachin Sanwa Limbu", structure: "tiered", hours: 0, std: 30, prem: 25, cap: 48 },
+                            { name: "Anish Dhodari", structure: "flat", hours: 0, std: 24, prem: 0, cap: 76 },
+                            { name: "Sanskar Pokhrel", structure: "flat", hours: 0, std: 24, prem: 0, cap: 76 },
+                            { name: "Supriya Thapa", structure: "tiered", hours: 0, std: 30, prem: 25, cap: 76 },
+                            { name: "Tejaswee Bhetwal", structure: "flat", hours: 0, std: 23, prem: 0, cap: 76 },
+                            { name: "Santosh Basnet", structure: "tiered", hours: 0, std: 27, prem: 23, cap: 76 },
+                            { name: "Usam Adhikari", structure: "tiered", hours: 0, std: 27, prem: 23, cap: 48 },
+                            { name: "Anurag Dahal", structure: "flat", hours: 0, std: 23, prem: 0, cap: 76 },
+                            { name: "Roshana Puri", structure: "tiered", hours: 0, std: 27, prem: 22, cap: 48 },
+                            { name: "Saksham Shrestha", structure: "tiered", hours: 0, std: 27, prem: 22, cap: 48 },
+                            { name: "Sameekshya Regmi", structure: "flat", hours: 0, std: 22, prem: 0, cap: 76 },
+                            { name: "Siddhartha Gautam", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
+                            { name: "Presna Aryal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 76 },
+                            { name: "Bikash Dahal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 48 },
+                            { name: "Prashna Sapkota", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 48 },
+                            { name: "Sanju Gharti Magar", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 48 },
+                            { name: "Pavneet", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
+                            { name: "Sagun Pant", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 76 },
+                            { name: "Asha Aryal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 76 },
+                            { name: "Nidhi Subedi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 48 },
+                            { name: "Monika Kawadi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 76 },
+                            { name: "Kushal Piya", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
+                            { name: "Muhammad Faizam Azim", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
+                            { name: "Sophiya Rayamajhi", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
+                            { name: "Prabhusan KC", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 }
+                        ];
+
+                        teamData.forEach((emp, index) => {
+                            document.write(`
+                                <tr>
+                                    <td><input type="text" class="emp-name emp-name-input" value="${emp.name}"></td>
+                                    <td>
+                                        <select class="pay-structure">
+                                            <option value="tiered" ${emp.structure === 'tiered' ? 'selected' : ''}>Standard + Premium Tier</option>
+                                            <option value="flat" ${emp.structure === 'flat' ? 'selected' : ''}>Continuous Flat Rate</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" class="emp-hours" value="${emp.hours}" step="0.1" style="width: 65px;"></td>
+                                    <td><input type="number" class="std-rate" value="${emp.std}" step="0.01" style="width: 60px;"></td>
+                                    <td><input type="number" class="prem-rate" value="${emp.prem}" step="0.01" style="width: 60px;"></td>
+                                    <td>
+                                        <select class="cap-threshold">
+                                            <option value="76" ${emp.cap === 76 ? 'selected' : ''}>76 Hours Cap</option>
+                                            <option value="48" ${emp.cap === 48 ? 'selected' : ''}>48 Hours Cap</option>
+                                        </select>
+                                    </td>
+                                    <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete</button></td>
+                                </tr>
+                            `);
+                        });
+                    </script>
+                </tbody>
+            </table>
+        </div>
         
         <div class="flex-actions">
-            <button type="button" class="btn btn-secondary" onclick="addRow()">+ Add Employee Row</button>
+            <button type="button" class="btn btn-secondary" onclick="addRow()">+ Add New Row</button>
             <button type="button" class="btn" onclick="calculateBulkPayroll()">Calculate All Payrolls</button>
         </div>
     </div>
 
+    <!-- Live Calculation Output Results -->
     <div class="card" id="resultsCard" style="display: none;">
         <h2>Payrun Calculation Breakdown</h2>
-        <table id="resultsTable">
-            <thead>
-                <tr>
-                    <th>Employee Name</th>
-                    <th>Structure</th>
-                    <th>Ordinary Hours</th>
-                    <th>Ordinary Gross</th>
-                    <th>Premium Hours</th>
-                    <th>Premium Gross</th>
-                    <th>Total Gross Pay</th>
-                </tr>
-            </thead>
-            <tbody id="resultsBody"></tbody>
-        </table>
+        <div style="overflow-x: auto;">
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Structure</th>
+                        <th>Ordinary Hours</th>
+                        <th>Ordinary Gross</th>
+                        <th>Premium Hours</th>
+                        <th>Premium Gross</th>
+                        <th>Total Gross Pay</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+            </table>
+        </div>
 
         <div class="summary-box" id="grandSummary"></div>
     </div>
 </div>
 
 <script>
-    // Add a new row to the data input sheet
     function addRow() {
         const tbody = document.getElementById('rosterBody');
-        const rowCount = tbody.rows.length + 1;
         const tr = document.createElement('tr');
         
         tr.innerHTML = `
-            <td><input type="text" class="emp-name" value="Employee ${rowCount}" placeholder="Name"></td>
+            <td><input type="text" class="emp-name emp-name-input" value="New Employee" placeholder="Name"></td>
             <td>
                 <select class="pay-structure">
                     <option value="tiered">Standard + Premium Tier</option>
                     <option value="flat">Continuous Flat Rate</option>
                 </select>
             </td>
-            <td><input type="number" class="emp-hours" value="0" step="0.1" style="width: 70px;"></td>
-            <td><input type="number" class="std-rate" value="30" step="0.01" style="width: 70px;"></td>
-            <td><input type="number" class="prem-rate" value="45" step="0.01" style="width: 70px;"></td>
+            <td><input type="number" class="emp-hours" value="0" step="0.1" style="width: 65px;"></td>
+            <td><input type="number" class="std-rate" value="25" step="0.01" style="width: 60px;"></td>
+            <td><input type="number" class="prem-rate" value="20" step="0.01" style="width: 60px;"></td>
             <td>
                 <select class="cap-threshold">
                     <option value="76">76 Hours Cap</option>
@@ -237,22 +295,20 @@
         tbody.appendChild(tr);
     }
 
-    // Remove targeted row
     function removeRow(button) {
         const row = button.parentNode.parentNode;
         const tbody = document.getElementById('rosterBody');
         if (tbody.rows.length > 1) {
             row.parentNode.removeChild(row);
         } else {
-            alert("You must keep at least one employee profile.");
+            alert("You must keep at least one profile.");
         }
     }
 
-    // Process all profiles in one sweep
     function calculateBulkPayroll() {
         const rows = document.querySelectorAll('#rosterBody tr');
         const resultsBody = document.getElementById('resultsBody');
-        resultsBody.innerHTML = ''; // Reset outputs
+        resultsBody.innerHTML = ''; 
         
         let totalGrossRun = 0;
         let totalHoursRun = 0;
@@ -281,7 +337,6 @@
                 ordGross = ordHours * stdRate;
                 premGross = premHours * premRate;
             } else {
-                // Continuous Flat Rate structure 
                 ordHours = hours;
                 premHours = 0;
                 ordGross = hours * stdRate;
@@ -292,7 +347,6 @@
             totalGrossRun += totalGross;
             totalHoursRun += hours;
 
-            // Generate explicit table row breakdowns
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><strong>${name}</strong></td>
@@ -306,7 +360,6 @@
             resultsBody.appendChild(tr);
         });
 
-        // Compute aggregate outputs for financial reporting
         document.getElementById('grandSummary').innerHTML = `
             <strong>Batch Payrun Performance Totals:</strong><br>
             Combined Operational Hours: <strong>${totalHoursRun.toFixed(2)} Hours</strong><br>
@@ -314,6 +367,7 @@
         `;
 
         document.getElementById('resultsCard').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('resultsCard').offsetTop, behavior: 'smooth' });
     }
 </script>
 
