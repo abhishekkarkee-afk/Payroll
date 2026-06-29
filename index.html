@@ -3,621 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortnightly Payrun Engine</title>
+    <title>Fortnightly Bulk Payrun Engine</title>
     <style>
         :root {
-            --bg-app: #090d16;
-            --bg-surface: #131b2e;
-            --bg-field: #090d16;
-            --primary: #38bdf8;
-            --primary-glow: rgba(56, 189, 248, 0.15);
-            --accent: #2dd4bf;
-            --accent-glow: rgba(45, 212, 191, 0.15);
-            --danger: #f43f5e;
-            --text-main: #f8fafc;
-            --text-muted: #64748b;
-            --border: #1e293b;
-            --radius: 12px;
-            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
         }
 
         body {
-            background-color: var(--bg-app);
-            color: var(--text-main);
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, var(--bg-app) 70%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 2rem;
         }
 
         .container {
-            background: var(--bg-surface);
-            max-width: 620px;
-            width: 100%;
-            padding: 35px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        header {
-            margin-bottom: 25px;
-            text-align: center;
+        h1, h2 {
+            color: #0f172a;
         }
 
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 15px;
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
         }
 
-        /* Interactive Date Picker Bar */
-        .date-picker-grid {
-            background: rgba(9, 13, 22, 0.6);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 12px 16px;
+        .meta-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .date-group {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .date-group label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            font-weight: 700;
-        }
-
-        .date-group input[type="date"] {
-            background: transparent;
-            border: none;
-            color: var(--primary);
-            font-size: 14px;
-            font-weight: 600;
-            outline: none;
-            padding: 0;
-            cursor: pointer;
-        }
-
-        .card-section {
-            background: rgba(9, 13, 22, 0.3);
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: var(--radius);
-            margin-bottom: 25px;
-        }
-
-        .section-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .profile-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .profile-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 11px 16px;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 13px;
-            transition: var(--transition);
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-primary { 
-            background: #0284c7; 
-            color: white; 
-            flex: 2;
-        }
-        .btn-primary:hover { background: #0369a1; }
-        
-        .btn-danger { 
-            background: transparent; 
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-        }
-        .btn-danger:hover { 
-            background: rgba(244, 63, 94, 0.1); 
-            color: var(--danger);
-            border-color: rgba(244, 63, 94, 0.2);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         label {
-            display: block;
+            font-size: 0.875rem;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-main);
-            font-size: 13px;
         }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-prefix, .input-suffix {
-            position: absolute;
-            color: var(--text-muted);
-            font-size: 14px;
-            font-weight: 500;
-            pointer-events: none;
-        }
-        .input-prefix { left: 14px; }
-        .input-suffix { right: 14px; }
 
         input, select {
-            width: 100%;
-            padding: 11px 14px;
+            padding: 0.5rem;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 14px;
-            color: var(--text-main);
-            background-color: var(--bg-field);
-            transition: var(--transition);
-        }
-        
-        .has-prefix input { padding-left: 28px; }
-        .has-suffix input { padding-right: 45px; }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-glow);
-        }
-
-        .radio-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .radio-label {
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: 600;
-            font-size: 13px;
-            background: var(--bg-field);
-            transition: var(--transition);
-            color: var(--text-muted);
-        }
-
-        input[type="radio"] { display: none; }
-
-        input[type="radio"]:checked + .radio-label {
-            background: var(--primary-glow);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .hidden { display: none !important; }
-
-        /* Focused Live Counters */
-        .results {
-            margin-top: 15px;
-            padding-top: 25px;
-            border-top: 1px solid var(--border);
-        }
-
-        .results h2 {
-            font-size: 12px;
-            margin-bottom: 15px;
-            color: var(--text-muted);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .live-matrix {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .stat-box {
-            background: rgba(9, 13, 22, 0.4);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: var(--radius);
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .stat-box:hover {
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .stat-box.premium-active {
-            background: linear-gradient(135deg, rgba(45, 212, 191, 0.02) 0%, rgba(45, 212, 191, 0.08) 100%);
-            border-color: rgba(45, 212, 191, 0.3);
-        }
-
-        .stat-box label {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            letter-spacing: 0.02em;
-        }
-
-        .stat-val {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 4px;
-        }
-
-        .stat-sub {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .premium-active .stat-val { color: var(--accent); }
-        .premium-active .stat-sub { color: rgba(45, 212, 191, 0.8); }
-
-        .alert-badge {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            background: rgba(45, 212, 191, 0.15);
-            color: var(--accent);
-            font-size: 10px;
-            padding: 2px 6px;
             border-radius: 4px;
-            font-weight: 700;
-            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-danger {
+            background-color: #ef4444;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+        }
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .flex-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .summary-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1.5rem;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <h1>Payrun Calculations</h1>
+    <h1>Fortnightly Bulk Payrun Engine</h1>
+    
+    <div class="card">
+        <h2>Payrun Settings</h2>
+        <div class="meta-grid">
+            <div class="form-group">
+                <label>Fortnight Start Date</label>
+                <input type="date" id="startDate">
+            </div>
+            <div class="form-group">
+                <label>Pay Release Date</label>
+                <input type="date" id="releaseDate">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Employee Payroll Roster</h2>
+        <table id="rosterTable">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Pay Structure</th>
+                    <th>Total Hours</th>
+                    <th>Std Rate ($)</th>
+                    <th>Prem Rate ($)</th>
+                    <th>Cap Threshold</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="rosterBody">
+                <tr>
+                    <td><input type="text" class="emp-name" value="Employee 1" placeholder="Name"></td>
+                    <td>
+                        <select class="pay-structure">
+                            <option value="tiered">Standard + Premium Tier</option>
+                            <option value="flat">Continuous Flat Rate</option>
+                        </select>
+                    </td>
+                    <td><input type="number" class="emp-hours" value="80" step="0.1" style="width: 70px;"></td>
+                    <td><input type="number" class="std-rate" value="30" step="0.01" style="width: 70px;"></td>
+                    <td><input type="number" class="prem-rate" value="45" step="0.01" style="width: 70px;"></td>
+                    <td>
+                        <select class="cap-threshold">
+                            <option value="76">76 Hours Cap</option>
+                            <option value="48">48 Hours Cap</option>
+                        </select>
+                    </td>
+                    <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
         
-        <div class="date-picker-grid">
-            <div class="date-group">
-                <label for="date-start">Fortnight Start Date</label>
-                <input type="date" id="date-start">
-            </div>
-            <div class="date-group">
-                <label for="date-end">Pay Release Date</label>
-                <input type="date" id="date-end">
-            </div>
-        </div>
-    </header>
-
-    <div class="card-section">
-        <div class="section-title">Saved Employee Roster</div>
-        <div class="profile-layout">
-            <select id="profile-select">
-                <option value="">-- Choose Profile --</option>
-            </select>
-            <input type="text" id="employee-name" placeholder="New Profile Name">
-        </div>
-        <div class="profile-actions">
-            <button class="btn btn-primary" id="btn-save">Save Profile Settings</button>
-            <button class="btn btn-danger" id="btn-delete">Delete</button>
+        <div class="flex-actions">
+            <button type="button" class="btn btn-secondary" onclick="addRow()">+ Add Employee Row</button>
+            <button type="button" class="btn" onclick="calculateBulkPayroll()">Calculate All Payrolls</button>
         </div>
     </div>
 
-    <div class="form-group">
-        <label>Pay Structure Selection</label>
-        <div class="radio-group">
-            <input type="radio" id="type-standard" name="payType" value="standard" checked>
-            <label for="type-standard" class="radio-label">Standard + Premium Tier</label>
+    <div class="card" id="resultsCard" style="display: none;">
+        <h2>Payrun Calculation Breakdown</h2>
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Structure</th>
+                    <th>Ordinary Hours</th>
+                    <th>Ordinary Gross</th>
+                    <th>Premium Hours</th>
+                    <th>Premium Gross</th>
+                    <th>Total Gross Pay</th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+        </table>
 
-            <input type="radio" id="type-flat" name="payType" value="flat">
-            <label for="type-flat" class="radio-label">Continuous Flat Rate</label>
-        </div>
-    </div>
-
-    <div class="form-grid">
-        <div class="form-group">
-            <label for="hours-worked">Total Fortnightly Hours</label>
-            <div class="input-wrapper has-suffix">
-                <input type="number" id="hours-worked" min="0" step="0.5" placeholder="0.00">
-                <span class="input-suffix">hrs</span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="base-rate">Standard Hourly Rate</label>
-            <div class="input-wrapper has-prefix">
-                <span class="input-prefix">$</span>
-                <input type="number" id="base-rate" min="0" step="0.01" placeholder="0.00">
-            </div>
-        </div>
-    </div>
-
-    <div id="standard-fields" class="form-grid">
-        <div class="form-group">
-            <label for="standard-cutoff">Ordinary Hours Cap</label>
-            <select id="standard-cutoff">
-                <option value="76">76 Hours Threshold</option>
-                <option value="48">48 Hours Threshold</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="ot-rate">Premium Hourly Rate</label>
-            <div class="input-wrapper has-prefix">
-                <span class="input-prefix">$</span>
-                <input type="number" id="ot-rate" min="0" step="0.01" placeholder="0.00">
-            </div>
-        </div>
-    </div>
-
-    <div class="results">
-        <h2>Live Hours & Financial Split</h2>
-        <div class="live-matrix">
-            <div class="stat-box" id="box-ordinary">
-                <label>Ordinary Allocation</label>
-                <div class="stat-val" id="lbl-ord-hours">0 hrs</div>
-                <div class="stat-sub" id="lbl-ord-pay">$0.00 base</div>
-            </div>
-
-            <div class="stat-box" id="box-premium">
-                <div class="alert-badge hidden" id="badge-premium">Active</div>
-                <label>Premium Allocation</label>
-                <div class="stat-val" id="lbl-prem-hours">0 hrs</div>
-                <div class="stat-sub" id="lbl-prem-pay">$0.00 accrued</div>
-            </div>
-        </div>
+        <div class="summary-box" id="grandSummary"></div>
     </div>
 </div>
 
 <script>
-    const elements = {
-        dateStart: document.getElementById('date-start'),
-        dateEnd: document.getElementById('date-end'),
-        profileSelect: document.getElementById('profile-select'),
-        employeeName: document.getElementById('employee-name'),
-        btnSave: document.getElementById('btn-save'),
-        btnDelete: document.getElementById('btn-delete'),
-        typeStandard: document.getElementById('type-standard'),
-        typeFlat: document.getElementById('type-flat'),
-        hoursWorked: document.getElementById('hours-worked'),
-        baseRate: document.getElementById('base-rate'),
-        standardFields: document.getElementById('standard-fields'),
-        standardCutoff: document.getElementById('standard-cutoff'),
-        otRate: document.getElementById('ot-rate'),
-        boxOrdinary: document.getElementById('box-ordinary'),
-        boxPremium: document.getElementById('box-premium'),
-        badgePremium: document.getElementById('badge-premium'),
-        lblOrdHours: document.getElementById('lbl-ord-hours'),
-        lblOrdPay: document.getElementById('lbl-ord-pay'),
-        lblPremHours: document.getElementById('lbl-prem-hours'),
-        lblPremPay: document.getElementById('lbl-prem-pay')
-    };
-
-    // Calculate default rolling fortnightly dates based on Monday, June 15, 2026
-    function initDefaultDates() {
-        const payDay = new Date('2026-06-15');
-        const startDay = new Date(payDay);
-        startDay.setDate(payDay.getDate() - 13); // 14-day calculation window window
-
-        elements.dateStart.value = startDay.toISOString().split('T')[0];
-        elements.dateEnd.value = payDay.toISOString().split('T')[0];
-    }
-
-    function toggleFields() {
-        const isStandard = elements.typeStandard.checked;
-
-        if (isStandard) {
-            elements.standardFields.classList.remove('hidden');
-            elements.boxPremium.classList.remove('hidden');
-        } else {
-            elements.standardFields.classList.add('hidden');
-            elements.boxPremium.classList.add('hidden');
-        }
-        calculatePay();
-    }
-
-    function calculatePay() {
-        const payType = document.querySelector('input[name="payType"]:checked').value;
-        const totalHours = Math.max(0, parseFloat(elements.hoursWorked.value) || 0);
-        const baseRate = Math.max(0, parseFloat(elements.baseRate.value) || 0);
-
-        let ordHours = 0;
-        let ordPay = 0;
-        let premHours = 0;
-        let premPay = 0;
-
-        if (payType === 'standard') {
-            const cutoff = parseFloat(elements.standardCutoff.value);
-            const otRate = Math.max(0, parseFloat(elements.otRate.value) || 0);
-
-            if (totalHours <= cutoff) {
-                ordHours = totalHours;
-                premHours = 0;
-            } else {
-                ordHours = cutoff;
-                premHours = totalHours - cutoff;
-            }
-
-            ordPay = ordHours * baseRate;
-            premPay = premHours * otRate;
-
-            // Dynamic Styling Feedback for Premium Allocation
-            if (premHours > 0) {
-                elements.boxPremium.classList.add('premium-active');
-                elements.badgePremium.classList.remove('hidden');
-            } else {
-                elements.boxPremium.classList.remove('premium-active');
-                elements.badgePremium.classList.add('hidden');
-            }
-
-            elements.lblPremHours.innerText = `${premHours} hrs`;
-            elements.lblPremPay.innerText = `$${premPay.toFixed(2)} accrued`;
-        } else {
-            ordHours = totalHours;
-            ordPay = ordHours * baseRate;
-            
-            elements.boxPremium.classList.remove('premium-active');
-            elements.badgePremium.classList.add('hidden');
-            elements.lblPremHours.innerText = `0 hrs`;
-            elements.lblPremPay.innerText = `$0.00 accrued`;
-        }
-
-        elements.lblOrdHours.innerText = `${ordHours} hrs`;
-        elements.lblOrdPay.innerText = `$${ordPay.toFixed(2)} base`;
-    }
-
-    function getProfiles() {
-        const stored = localStorage.getItem('payroll_profiles_v4');
-        return stored ? JSON.parse(stored) : {};
-    }
-
-    function renderProfileDropdown() {
-        const profiles = getProfiles();
-        elements.profileSelect.innerHTML = '<option value="">-- Choose Profile --</option>';
+    // Add a new row to the data input sheet
+    function addRow() {
+        const tbody = document.getElementById('rosterBody');
+        const rowCount = tbody.rows.length + 1;
+        const tr = document.createElement('tr');
         
-        Object.keys(profiles).sort().forEach(name => {
-            const opt = document.createElement('option');
-            opt.value = name;
-            opt.textContent = name;
-            elements.profileSelect.appendChild(opt);
-        });
+        tr.innerHTML = `
+            <td><input type="text" class="emp-name" value="Employee ${rowCount}" placeholder="Name"></td>
+            <td>
+                <select class="pay-structure">
+                    <option value="tiered">Standard + Premium Tier</option>
+                    <option value="flat">Continuous Flat Rate</option>
+                </select>
+            </td>
+            <td><input type="number" class="emp-hours" value="0" step="0.1" style="width: 70px;"></td>
+            <td><input type="number" class="std-rate" value="30" step="0.01" style="width: 70px;"></td>
+            <td><input type="number" class="prem-rate" value="45" step="0.01" style="width: 70px;"></td>
+            <td>
+                <select class="cap-threshold">
+                    <option value="76">76 Hours Cap</option>
+                    <option value="48">48 Hours Cap</option>
+                </select>
+            </td>
+            <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete</button></td>
+        `;
+        tbody.appendChild(tr);
     }
 
-    function saveProfile() {
-        const name = elements.employeeName.value.trim();
-        if (!name) {
-            alert('Please assign an employee name identifier to save.');
-            return;
+    // Remove targeted row
+    function removeRow(button) {
+        const row = button.parentNode.parentNode;
+        const tbody = document.getElementById('rosterBody');
+        if (tbody.rows.length > 1) {
+            row.parentNode.removeChild(row);
+        } else {
+            alert("You must keep at least one employee profile.");
         }
-
-        const profiles = getProfiles();
-        profiles[name] = {
-            payType: document.querySelector('input[name="payType"]:checked').value,
-            hoursWorked: elements.hoursWorked.value,
-            baseRate: elements.baseRate.value,
-            standardCutoff: elements.standardCutoff.value,
-            otRate: elements.otRate.value,
-            dateStart: elements.dateStart.value,
-            dateEnd: elements.dateEnd.value
-        };
-
-        localStorage.setItem('payroll_profiles_v4', JSON.stringify(profiles));
-        renderProfileDropdown();
-        elements.profileSelect.value = name;
     }
 
-    function loadProfile() {
-        const selectedName = elements.profileSelect.value;
-        if (!selectedName) return;
+    // Process all profiles in one sweep
+    function calculateBulkPayroll() {
+        const rows = document.querySelectorAll('#rosterBody tr');
+        const resultsBody = document.getElementById('resultsBody');
+        resultsBody.innerHTML = ''; // Reset outputs
+        
+        let totalGrossRun = 0;
+        let totalHoursRun = 0;
 
-        const profiles = getProfiles();
-        const profile = profiles[selectedName];
+        rows.forEach(row => {
+            const name = row.querySelector('.emp-name').value || 'Unnamed';
+            const structure = row.querySelector('.pay-structure').value;
+            const hours = parseFloat(row.querySelector('.emp-hours').value) || 0;
+            const stdRate = parseFloat(row.querySelector('.std-rate').value) || 0;
+            const premRate = parseFloat(row.querySelector('.prem-rate').value) || 0;
+            const threshold = parseFloat(row.querySelector('.cap-threshold').value) || 76;
 
-        if (profile) {
-            elements.employeeName.value = selectedName;
-            if (profile.payType === 'standard') {
-                elements.typeStandard.checked = true;
+            let ordHours = 0;
+            let premHours = 0;
+            let ordGross = 0;
+            let premGross = 0;
+
+            if (structure === 'tiered') {
+                if (hours > threshold) {
+                    ordHours = threshold;
+                    premHours = hours - threshold;
+                } else {
+                    ordHours = hours;
+                    premHours = 0;
+                }
+                ordGross = ordHours * stdRate;
+                premGross = premHours * premRate;
             } else {
-                elements.typeFlat.checked = true;
+                // Continuous Flat Rate structure 
+                ordHours = hours;
+                premHours = 0;
+                ordGross = hours * stdRate;
+                premGross = 0;
             }
-            
-            elements.hoursWorked.value = profile.hoursWorked;
-            elements.baseRate.value = profile.baseRate;
-            elements.standardCutoff.value = profile.standardCutoff;
-            elements.otRate.value = profile.otRate || '';
-            if (profile.dateStart) elements.dateStart.value = profile.dateStart;
-            if (profile.dateEnd) elements.dateEnd.value = profile.dateEnd;
-            
-            toggleFields();
-        }
+
+            const totalGross = ordGross + premGross;
+            totalGrossRun += totalGross;
+            totalHoursRun += hours;
+
+            // Generate explicit table row breakdowns
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${name}</strong></td>
+                <td>${structure === 'tiered' ? 'Tiered (' + threshold + 'h Cap)' : 'Flat Rate'}</td>
+                <td>${ordHours.toFixed(2)} hrs</td>
+                <td>$${ordGross.toFixed(2)}</td>
+                <td>${premHours.toFixed(2)} hrs</td>
+                <td>$${premGross.toFixed(2)}</td>
+                <td><strong>$${totalGross.toFixed(2)}</strong></td>
+            `;
+            resultsBody.appendChild(tr);
+        });
+
+        // Compute aggregate outputs for financial reporting
+        document.getElementById('grandSummary').innerHTML = `
+            <strong>Batch Payrun Performance Totals:</strong><br>
+            Combined Operational Hours: <strong>${totalHoursRun.toFixed(2)} Hours</strong><br>
+            Total Gross Payroll Outlay: <strong style="color: #16a34a; font-size: 1.2rem;">$${totalGrossRun.toFixed(2)} AUD</strong>
+        `;
+
+        document.getElementById('resultsCard').style.display = 'block';
     }
-
-    function deleteProfile() {
-        const selectedName = elements.profileSelect.value;
-        if (!selectedName) return;
-
-        if (confirm(`Remove profile roster record for "${selectedName}"?`)) {
-            const profiles = getProfiles();
-            delete profiles[selectedName];
-            localStorage.setItem('payroll_profiles_v4', JSON.stringify(profiles));
-            
-            elements.employeeName.value = '';
-            elements.hoursWorked.value = '';
-            elements.baseRate.value = '';
-            elements.otRate.value = '';
-            initDefaultDates();
-            
-            renderProfileDropdown();
-            toggleFields();
-        }
-    }
-
-    function initEvents() {
-        elements.typeStandard.addEventListener('click', toggleFields);
-        elements.typeFlat.addEventListener('click', toggleFields);
-        elements.hoursWorked.addEventListener('input', calculatePay);
-        elements.baseRate.addEventListener('input', calculatePay);
-        elements.otRate.addEventListener('input', calculatePay);
-        elements.standardCutoff.addEventListener('change', calculatePay);
-        elements.profileSelect.addEventListener('change', loadProfile);
-        elements.btnSave.addEventListener('click', saveProfile);
-        elements.btnDelete.addEventListener('click', deleteProfile);
-    }
-
-    initDefaultDates();
-    renderProfileDropdown();
-    initEvents();
-    toggleFields();
 </script>
 
 </body>
