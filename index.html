@@ -136,6 +136,11 @@
             font-weight: 600;
             width: 180px;
         }
+        
+        .disabled-cell {
+            background-color: #f8fafc;
+            color: #94a3b8;
+        }
     </style>
 </head>
 <body>
@@ -178,36 +183,36 @@
                     <!-- Preloaded Team List -->
                     <script>
                         const teamData = [
-                            { name: "Nippu Pokhrel", structure: "tiered", hours: 0, std: 35, prem: 25, cap: 76 },
-                            { name: "Abhishek Karki", structure: "tiered", hours: 0, std: 34, prem: 25, cap: 76 },
-                            { name: "Nabina Thakuri", structure: "tiered", hours: 0, std: 0, prem: 0, cap: 76 },
-                            { name: "Sami Basnet", structure: "flat", hours: 0, std: 24, prem: 0, cap: 76 },
-                            { name: "Musica Karki", structure: "tiered", hours: 0, std: 30, prem: 25, cap: 48 },
-                            { name: "Sachin Sanwa Limbu", structure: "tiered", hours: 0, std: 30, prem: 25, cap: 48 },
-                            { name: "Anish Dhodari", structure: "flat", hours: 0, std: 24, prem: 0, cap: 76 },
-                            { name: "Sanskar Pokhrel", structure: "flat", hours: 0, std: 24, prem: 0, cap: 76 },
-                            { name: "Supriya Thapa", structure: "tiered", hours: 0, std: 30, prem: 25, cap: 76 },
-                            { name: "Tejaswee Bhetwal", structure: "flat", hours: 0, std: 23, prem: 0, cap: 76 },
-                            { name: "Santosh Basnet", structure: "tiered", hours: 0, std: 27, prem: 23, cap: 76 },
-                            { name: "Usam Adhikari", structure: "tiered", hours: 0, std: 27, prem: 23, cap: 48 },
-                            { name: "Anurag Dahal", structure: "flat", hours: 0, std: 23, prem: 0, cap: 76 },
-                            { name: "Roshana Puri", structure: "tiered", hours: 0, std: 27, prem: 22, cap: 48 },
-                            { name: "Saksham Shrestha", structure: "tiered", hours: 0, std: 27, prem: 22, cap: 48 },
-                            { name: "Sameekshya Regmi", structure: "flat", hours: 0, std: 22, prem: 0, cap: 76 },
-                            { name: "Siddhartha Gautam", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
-                            { name: "Presna Aryal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 76 },
-                            { name: "Bikash Dahal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 48 },
-                            { name: "Prashna Sapkota", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 48 },
-                            { name: "Sanju Gharti Magar", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 48 },
-                            { name: "Pavneet", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
-                            { name: "Sagun Pant", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 76 },
-                            { name: "Asha Aryal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 76 },
-                            { name: "Nidhi Subedi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 48 },
-                            { name: "Monika Kawadi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: 76 },
-                            { name: "Kushal Piya", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
-                            { name: "Muhammad Faizam Azim", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
-                            { name: "Sophiya Rayamajhi", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 },
-                            { name: "Prabhusan KC", structure: "flat", hours: 0, std: 20, prem: 0, cap: 76 }
+                            { name: "Nippu Pokhrel", structure: "tiered", hours: 0, std: 35, prem: 25, cap: "76" },
+                            { name: "Abhishek Karki", structure: "tiered", hours: 0, std: 34, prem: 25, cap: "76" },
+                            { name: "Nabina Thakuri", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
+                            { name: "Sami Basnet", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
+                            { name: "Musica Karki", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "48" },
+                            { name: "Sachin Sanwa Limbu", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "48" },
+                            { name: "Anish Dhodari", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
+                            { name: "Sanskar Pokhrel", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
+                            { name: "Supriya Thapa", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "76" },
+                            { name: "Tejaswee Bhetwal", structure: "flat", hours: 0, std: 0, prem: 23, cap: "none" },
+                            { name: "Santosh Basnet", structure: "tiered", hours: 0, std: 27, prem: 23, cap: "76" },
+                            { name: "Usam Adhikari", structure: "tiered", hours: 0, std: 27, prem: 23, cap: "48" },
+                            { name: "Anurag Dahal", structure: "flat", hours: 0, std: 0, prem: 23, cap: "none" },
+                            { name: "Roshana Puri", structure: "tiered", hours: 0, std: 27, prem: 22, cap: "48" },
+                            { name: "Saksham Shrestha", structure: "tiered", hours: 0, std: 27, prem: 22, cap: "48" },
+                            { name: "Sameekshya Regmi", structure: "flat", hours: 0, std: 0, prem: 22, cap: "none" },
+                            { name: "Siddhartha Gautam", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+                            { name: "Presna Aryal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
+                            { name: "Bikash Dahal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
+                            { name: "Prashna Sapkota", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
+                            { name: "Sanju Gharti Magar", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
+                            { name: "Pavneet", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+                            { name: "Sagun Pant", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
+                            { name: "Asha Aryal", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+                            { name: "Nidhi Subedi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
+                            { name: "Monika Kawadi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
+                            { name: "Kushal Piya", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+                            { name: "Muhammad Faizam Azim", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+                            { name: "Sophiya Rayamajhi", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+                            { name: "Prabhusan KC", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" }
                         ];
 
                         teamData.forEach((emp, index) => {
@@ -215,18 +220,19 @@
                                 <tr>
                                     <td><input type="text" class="emp-name emp-name-input" value="${emp.name}"></td>
                                     <td>
-                                        <select class="pay-structure">
+                                        <select class="pay-structure" onchange="toggleStructureRules(this)">
                                             <option value="tiered" ${emp.structure === 'tiered' ? 'selected' : ''}>Standard + Premium Tier</option>
                                             <option value="flat" ${emp.structure === 'flat' ? 'selected' : ''}>Continuous Flat Rate</option>
                                         </select>
                                     </td>
                                     <td><input type="number" class="emp-hours" value="${emp.hours}" step="0.1" style="width: 65px;"></td>
-                                    <td><input type="number" class="std-rate" value="${emp.std}" step="0.01" style="width: 60px;"></td>
+                                    <td><input type="number" class="std-rate" value="${emp.std}" step="0.01" style="width: 60px;" ${emp.structure === 'flat' ? 'disabled class="disabled-cell"' : ''}></td>
                                     <td><input type="number" class="prem-rate" value="${emp.prem}" step="0.01" style="width: 60px;"></td>
                                     <td>
-                                        <select class="cap-threshold">
-                                            <option value="76" ${emp.cap === 76 ? 'selected' : ''}>76 Hours Cap</option>
-                                            <option value="48" ${emp.cap === 48 ? 'selected' : ''}>48 Hours Cap</option>
+                                        <select class="cap-threshold" ${emp.structure === 'flat' ? 'disabled class="disabled-cell"' : ''}>
+                                            <option value="76" ${emp.cap === '76' ? 'selected' : ''}>76 Hours Cap</option>
+                                            <option value="48" ${emp.cap === '48' ? 'selected' : ''}>48 Hours Cap</option>
+                                            <option value="none" ${emp.cap === 'none' ? 'selected' : ''}>No Cap</option>
                                         </select>
                                     </td>
                                     <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete</button></td>
@@ -269,6 +275,28 @@
 </div>
 
 <script>
+    // Visually toggle input states if user dynamically alters interactive drop-downs
+    function toggleStructureRules(selectElement) {
+        const row = selectElement.parentNode.parentNode;
+        const stdInput = row.querySelector('.std-rate');
+        const capSelect = row.querySelector('.cap-threshold');
+        
+        if (selectElement.value === 'flat') {
+            stdInput.value = 0;
+            stdInput.disabled = true;
+            stdInput.classList.add('disabled-cell');
+            capSelect.value = 'none';
+            capSelect.disabled = true;
+            capSelect.classList.add('disabled-cell');
+        } else {
+            stdInput.disabled = false;
+            stdInput.classList.remove('disabled-cell');
+            capSelect.disabled = false;
+            capSelect.classList.remove('disabled-cell');
+            if(capSelect.value === 'none') capSelect.value = '76';
+        }
+    }
+
     function addRow() {
         const tbody = document.getElementById('rosterBody');
         const tr = document.createElement('tr');
@@ -276,7 +304,7 @@
         tr.innerHTML = `
             <td><input type="text" class="emp-name emp-name-input" value="New Employee" placeholder="Name"></td>
             <td>
-                <select class="pay-structure">
+                <select class="pay-structure" onchange="toggleStructureRules(this)">
                     <option value="tiered">Standard + Premium Tier</option>
                     <option value="flat">Continuous Flat Rate</option>
                 </select>
@@ -288,6 +316,7 @@
                 <select class="cap-threshold">
                     <option value="76">76 Hours Cap</option>
                     <option value="48">48 Hours Cap</option>
+                    <option value="none">No Cap</option>
                 </select>
             </td>
             <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete</button></td>
@@ -319,14 +348,22 @@
             const hours = parseFloat(row.querySelector('.emp-hours').value) || 0;
             const stdRate = parseFloat(row.querySelector('.std-rate').value) || 0;
             const premRate = parseFloat(row.querySelector('.prem-rate').value) || 0;
-            const threshold = parseFloat(row.querySelector('.cap-threshold').value) || 76;
+            const capValue = row.querySelector('.cap-threshold').value;
 
             let ordHours = 0;
             let premHours = 0;
             let ordGross = 0;
             let premGross = 0;
 
-            if (structure === 'tiered') {
+            if (structure === 'flat' || capValue === 'none') {
+                // Flat rate metrics: hours calculated wholly at Premium box rate
+                ordHours = 0;
+                premHours = hours;
+                ordGross = 0;
+                premGross = hours * premRate;
+            } else {
+                // Tiered standard + premium model logic
+                const threshold = parseFloat(capValue) || 76;
                 if (hours > threshold) {
                     ordHours = threshold;
                     premHours = hours - threshold;
@@ -336,11 +373,6 @@
                 }
                 ordGross = ordHours * stdRate;
                 premGross = premHours * premRate;
-            } else {
-                ordHours = hours;
-                premHours = 0;
-                ordGross = hours * stdRate;
-                premGross = 0;
             }
 
             const totalGross = ordGross + premGross;
@@ -350,7 +382,7 @@
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><strong>${name}</strong></td>
-                <td>${structure === 'tiered' ? 'Tiered (' + threshold + 'h Cap)' : 'Flat Rate'}</td>
+                <td>${structure === 'flat' ? 'Flat Rate' : 'Tiered (' + capValue + 'h Cap)'}</td>
                 <td>${ordHours.toFixed(2)} hrs</td>
                 <td>$${ordGross.toFixed(2)}</td>
                 <td>${premHours.toFixed(2)} hrs</td>
