@@ -18,7 +18,7 @@
   --shadow:0 12px 30px rgba(0,0,0,.28);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45;transition:background-color .2s ease,color .2s ease}
 button,input,select{font:inherit}
 button{cursor:pointer}
 .app{max-width:1500px;margin:0 auto;padding:28px}
@@ -28,18 +28,21 @@ button{cursor:pointer}
 h1{font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.03em}
 .subtitle{color:var(--muted);margin:3px 0 0;font-size:14px}
 .actions{display:flex;gap:9px;flex-wrap:wrap}
-.btn{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:10px 14px;border-radius:10px;font-weight:700;transition:.18s;box-shadow:0 1px 1px rgba(0,0,0,.03)}
-.btn:hover{transform:translateY(-1px);border-color:#cbd5e1}
+.btn{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:10px 14px;border-radius:10px;font-weight:700;transition:all .18s ease;box-shadow:0 1px 1px rgba(0,0,0,.03)}
+.btn:hover{transform:translateY(-1px);border-color:#cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.btn:active{transform:translateY(0)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
 .btn.ghost{background:transparent}
 .btn.danger{color:#fff;background:var(--danger);border-color:var(--danger)}
+.btn.danger:hover{background:#b91c1c}
 .btn.success{color:#fff;background:var(--success);border-color:var(--success)}
 .icon-btn{width:40px;height:40px;padding:0;display:grid;place-items:center}
 .layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px}
 .sidebar,.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 .sidebar{padding:14px;height:max-content;position:sticky;top:18px}
 .nav-title{padding:10px 10px 7px;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
-.nav-btn{width:100%;border:0;background:transparent;color:var(--text);text-align:left;padding:11px 12px;border-radius:10px;font-weight:700;margin-bottom:3px}
+.nav-btn{width:100%;border:0;background:transparent;color:var(--text);text-align:left;padding:11px 12px;border-radius:10px;font-weight:700;margin-bottom:3px;transition:all .15s ease}
 .nav-btn:hover,.nav-btn.active{background:var(--accent-soft);color:var(--accent)}
 .content{min-width:0}
 .section{display:none}.section.active{display:block}
@@ -50,23 +53,24 @@ h1{font-size:clamp(24px,3vw,34px);margin:0;letter-spacing:-.03em}
 .grid{display:grid;gap:14px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .field{display:flex;flex-direction:column;gap:6px}
 label{font-size:12px;font-weight:800;color:var(--muted)}
-input,select{width:100%;padding:10px 11px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);outline:none}
+input,select{width:100%;padding:10px 11px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s}
 input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
-.switch{position:relative;width:42px;height:24px;display:inline-block;flex:0 0 auto}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#98a2b3;border-radius:99px;transition:.2s}.slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}.switch input:checked + .slider{background:var(--accent)}.switch input:checked + .slider:before{transform:translateX(18px)}
+.switch{position:relative;width:42px;height:24px;display:inline-block;flex:0 0 auto}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#98a2b3;border-radius:99px;transition:.2s;cursor:pointer}.slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}.switch input:checked + .slider{background:var(--accent)}.switch input:checked + .slider:before{transform:translateX(18px)}
 .stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
 .stat{padding:18px;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
 .stat-label{font-size:12px;color:var(--muted);font-weight:800}.stat-value{font-size:27px;font-weight:850;letter-spacing:-.03em;margin-top:5px}.stat-sub{font-size:12px;color:var(--muted);margin-top:3px}
 .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .toolbar-left,.toolbar-right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .search{min-width:240px}
-.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:13px}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:13px;background:var(--surface)}
 table{width:100%;border-collapse:separate;border-spacing:0;min-width:1050px}
 th,td{padding:11px 10px;border-bottom:1px solid var(--border);white-space:nowrap;text-align:left}
 th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface-2);position:sticky;top:0;z-index:1}
 tr:last-child td{border-bottom:0}
+tbody tr{transition:background-color .15s ease}
 tbody tr:hover{background:var(--surface-2)}
-.row-actions{display:flex;gap:5px}.mini{padding:7px 9px;border-radius:8px;font-size:12px}
+.row-actions{display:flex;gap:5px}.mini{padding:6px 10px;border-radius:8px;font-size:12px}
 .badge{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800;background:var(--accent-soft);color:var(--accent)}
 .badge.gray{background:var(--surface-2);color:var(--muted)}
 .badge.green{background:#ecfdf3;color:#15803d}.badge.amber{background:#fffbeb;color:#b45309}.badge.red{background:#fef2f2;color:#b91c1c}
@@ -77,15 +81,13 @@ tbody tr:hover{background:var(--surface-2)}
 .pill-input{display:flex;gap:8px;align-items:center}.pill-input input{max-width:100px}
 .hidden{display:none!important}
 .footer-bar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:14px;color:var(--muted);font-size:12px}
-.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.58);display:none;align-items:center;justify-content:center;padding:22px;z-index:100}.modal-backdrop.show{display:flex}
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.58);display:none;align-items:center;justify-content:center;padding:22px;z-index:100;backdrop-filter:blur(3px)}.modal-backdrop.show{display:flex}
 .modal{width:min(780px,100%);max-height:90vh;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:0 24px 80px rgba(0,0,0,.25);padding:22px}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modal-title{font-size:20px;font-weight:850}
 hr{border:0;border-top:1px solid var(--border);margin:18px 0}
 .preset-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.preset{border:1px solid var(--border);background:var(--surface-2);padding:13px;border-radius:12px;text-align:left}.preset:hover{border-color:var(--accent)}
+.preset{border:1px solid var(--border);background:var(--surface-2);padding:13px;border-radius:12px;text-align:left;transition:all .15s ease}.preset:hover{border-color:var(--accent);transform:translateY(-1px)}
 .color-row{display:flex;gap:8px;flex-wrap:wrap}.swatch{width:32px;height:32px;border-radius:50%;border:3px solid var(--surface);outline:1px solid var(--border)}
-.kpi-positive{color:var(--success)}
-.validation{font-size:11px;color:var(--danger);margin-top:4px}
 @media(max-width:1100px){.layout{grid-template-columns:1fr}.sidebar{position:static;display:flex;gap:4px;overflow:auto}.nav-title{display:none}.nav-btn{min-width:max-content;width:auto}.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.app{padding:14px}.topbar{align-items:flex-start;flex-direction:column}.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}.search{min-width:150px}.preset-grid{grid-template-columns:1fr}}
 @media print{
@@ -234,7 +236,6 @@ hr{border:0;border-top:1px solid var(--border);margin:18px 0}
   </div>
 </div>
 
-
 <div class="modal-backdrop" id="hoursModal">
   <div class="modal" style="width:min(900px,100%)">
     <div class="modal-head">
@@ -251,7 +252,7 @@ hr{border:0;border-top:1px solid var(--border);margin:18px 0}
             <th>Employee</th>
             <th>Pay Structure</th>
             <th>Hours</th>
-            <th>Rate</th>
+            <th>Rates</th>
             <th>Estimated Gross</th>
           </tr>
         </thead>
@@ -286,321 +287,600 @@ hr{border:0;border-top:1px solid var(--border);margin:18px 0}
 <input type="file" id="csvFile" accept=".csv,text/csv" class="hidden">
 
 <script>
+function uid() {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 9);
+}
+
 const initialTeam = [
-                            { name: "Nippu Pokhrel", structure: "tiered", hours: 0, std: 35, prem: 25, cap: "76" },
-                            { name: "Abhishek Karki", structure: "tiered", hours: 0, std: 34, prem: 25, cap: "76" },
-                            { name: "Nabina Thakuri", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
-                            { name: "Sami Basnet", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
-                            { name: "Musica Karki", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "48" },
-                            { name: "Sachin Sanwa Limbu", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "48" },
-                            { name: "Anish Dhodari", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
-                            { name: "Sanskar Pokhrel", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
-                            { name: "Supriya Thapa", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "76" },
-                            { name: "Tejaswee Bhetwal", structure: "flat", hours: 0, std: 0, prem: 23, cap: "none" },
-                            { name: "Santosh Basnet", structure: "tiered", hours: 0, std: 27, prem: 23, cap: "76" },
-                            { name: "Usam Adhikari", structure: "tiered", hours: 0, std: 27, prem: 23, cap: "48" },
-                            { name: "Anurag Dahal", structure: "flat", hours: 0, std: 0, prem: 23, cap: "none" },
-                            { name: "Roshana Puri", structure: "tiered", hours: 0, std: 27, prem: 22, cap: "48" },
-                            { name: "Saksham Shrestha", structure: "tiered", hours: 0, std: 27, prem: 22, cap: "48" },
-                            { name: "Sameekshya Regmi", structure: "flat", hours: 0, std: 0, prem: 22, cap: "none" },
-                            { name: "Siddhartha Gautam", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
-                            { name: "Presna Aryal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
-                            { name: "Bikash Dahal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
-                            { name: "Prashna Sapkota", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
-                            { name: "Sanju Gharti Magar", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
-                            { name: "Pavneet", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
-                            { name: "Sagun Pant", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
-                            { name: "Asha Aryal", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
-                            { name: "Nidhi Subedi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
-                            { name: "Monika Kawadi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
-                            { name: "Kushal Piya", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
-                            { name: "Muhammad Faizam Azim", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
-                            { name: "Sophiya Rayamajhi", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
-                            { name: "Prabhusan KC", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" }];
+  { name: "Nippu Pokhrel", structure: "tiered", hours: 0, std: 35, prem: 25, cap: "76" },
+  { name: "Abhishek Karki", structure: "tiered", hours: 0, std: 34, prem: 25, cap: "76" },
+  { name: "Nabina Thakuri", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
+  { name: "Sami Basnet", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
+  { name: "Musica Karki", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "48" },
+  { name: "Sachin Sanwa Limbu", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "48" },
+  { name: "Anish Dhodari", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
+  { name: "Sanskar Pokhrel", structure: "flat", hours: 0, std: 0, prem: 24, cap: "none" },
+  { name: "Supriya Thapa", structure: "tiered", hours: 0, std: 30, prem: 25, cap: "76" },
+  { name: "Tejaswee Bhetwal", structure: "flat", hours: 0, std: 0, prem: 23, cap: "none" },
+  { name: "Santosh Basnet", structure: "tiered", hours: 0, std: 27, prem: 23, cap: "76" },
+  { name: "Usam Adhikari", structure: "tiered", hours: 0, std: 27, prem: 23, cap: "48" },
+  { name: "Anurag Dahal", structure: "flat", hours: 0, std: 0, prem: 23, cap: "none" },
+  { name: "Roshana Puri", structure: "tiered", hours: 0, std: 27, prem: 22, cap: "48" },
+  { name: "Saksham Shrestha", structure: "tiered", hours: 0, std: 27, prem: 22, cap: "48" },
+  { name: "Sameekshya Regmi", structure: "flat", hours: 0, std: 0, prem: 22, cap: "none" },
+  { name: "Siddhartha Gautam", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+  { name: "Presna Aryal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
+  { name: "Bikash Dahal", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
+  { name: "Prashna Sapkota", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
+  { name: "Sanju Gharti Magar", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
+  { name: "Pavneet", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+  { name: "Sagun Pant", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
+  { name: "Asha Aryal", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+  { name: "Nidhi Subedi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "48" },
+  { name: "Monika Kawadi", structure: "tiered", hours: 0, std: 25, prem: 20, cap: "76" },
+  { name: "Kushal Piya", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+  { name: "Muhammad Faizam Azim", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+  { name: "Sophiya Rayamajhi", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" },
+  { name: "Prabhusan KC", structure: "flat", hours: 0, std: 0, prem: 20, cap: "none" }
+];
+
 const accentChoices = ["#2563eb","#7c3aed","#0f766e","#059669","#dc2626","#ea580c","#db2777","#475569"];
 
 const state = {
-  employees: initialTeam.map((e,i)=>({
-    id: crypto.randomUUID(), name:e.name, structure:e.structure, hours:Number(e.hours)||0,
-    std:Number(e.std)||0, prem:Number(e.prem)||0, threshold:e.cap==="none"?null:Number(e.cap)||76,
-    allowance:0, active:true, selected:false
+  employees: initialTeam.map(e => ({
+    id: uid(),
+    name: e.name,
+    structure: e.structure,
+    hours: Number(e.hours) || 0,
+    std: Number(e.std) || 0,
+    prem: Number(e.prem) || 0,
+    threshold: e.cap === "none" ? null : (Number(e.cap) || 76),
+    allowance: 0,
+    active: true,
+    selected: false
   })),
-  settings:{
-    businessName:"Fortnightly Payrun Pro", subtitle:"Flexible payroll calculator & payrun workspace",
-    accent:"#2563eb", theme:"light", autosave:true, currency:"$", defaultStructure:"tiered",
-    defaultStd:25, defaultPrem:20, defaultThreshold:76, defaultAllowance:0,
-    capEnabled:true, allowancesEnabled:true, thresholds:[48,76]
+  settings: {
+    businessName: "Fortnightly Payrun Pro",
+    subtitle: "Flexible payroll calculator & payrun workspace",
+    accent: "#2563eb",
+    theme: "light",
+    autosave: true,
+    currency: "$",
+    defaultStructure: "tiered",
+    defaultStd: 25,
+    defaultPrem: 20,
+    defaultThreshold: 76,
+    defaultAllowance: 0,
+    capEnabled: true,
+    allowancesEnabled: true,
+    thresholds: [48, 76]
   },
-  meta:{label:"",start:"",end:"",release:""}, results:[], activity:[]
+  meta: { label: "", start: "", end: "", release: "" },
+  results: [],
+  activity: []
 };
 
-function money(v){return (state.settings.currency||"$")+Number(v||0).toFixed(2)}
-function uid(){return crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random())}
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function persist(){
-  if(!state.settings.autosave)return;
+function money(v) { return (state.settings.currency || "$") + Number(v || 0).toFixed(2); }
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c])); }
+
+function persist() {
+  if (!state.settings.autosave) return;
   localStorage.setItem("payrunProState", JSON.stringify(state));
 }
-function load(){
-  try{
-    const saved=JSON.parse(localStorage.getItem("payrunProState")||"null");
-    if(saved){
-      Object.assign(state,saved);
-      state.settings=Object.assign(state.settings,saved.settings||{});
-      state.meta=Object.assign(state.meta,saved.meta||{});
-      state.employees=(saved.employees||[]).map(e=>Object.assign({id:uid(),selected:false,active:true,allowance:0},e));
+
+function load() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("payrunProState") || "null");
+    if (saved) {
+      Object.assign(state, saved);
+      state.settings = Object.assign(state.settings, saved.settings || {});
+      state.meta = Object.assign(state.meta, saved.meta || {});
+      state.employees = (saved.employees || []).map(e => ({
+        id: e.id || uid(),
+        name: e.name || "Employee",
+        structure: e.structure || "tiered",
+        hours: Number(e.hours) || 0,
+        std: Number(e.std) || 0,
+        prem: Number(e.prem) || 0,
+        threshold: e.threshold !== undefined ? e.threshold : 76,
+        allowance: Number(e.allowance) || 0,
+        active: e.active !== false,
+        selected: !!e.selected
+      }));
     }
-  }catch(e){}
+  } catch (e) {
+    console.error("Error loading saved state:", e);
+  }
 }
-function setTheme(){
-  const t=state.settings.theme;
-  document.documentElement.dataset.theme = t==="system" ? (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light") : t;
-  document.documentElement.style.setProperty("--accent",state.settings.accent);
+
+function setTheme() {
+  const t = state.settings.theme;
+  document.documentElement.dataset.theme = t === "system" ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : t;
+  document.documentElement.style.setProperty("--accent", state.settings.accent);
 }
-function renderHeader(){
-  document.getElementById("appTitle").textContent=state.settings.businessName||"Fortnightly Payrun Pro";
-  document.getElementById("appSubtitle").textContent=state.settings.subtitle||"Flexible payroll calculator & payrun workspace";
+
+function renderHeader() {
+  document.getElementById("appTitle").textContent = state.settings.businessName || "Fortnightly Payrun Pro";
+  document.getElementById("appSubtitle").textContent = state.settings.subtitle || "Flexible payroll calculator & payrun workspace";
 }
-function bindMeta(){
-  for(const [id,key] of [["payrunLabel","label"],["startDate","start"],["endDate","end"],["releaseDate","release"]]){
-    const el=document.getElementById(id); el.value=state.meta[key]||"";
-    el.oninput=()=>{state.meta[key]=el.value; updatePeriodBadge(); persist()}
+
+function bindMeta() {
+  for (const [id, key] of [["payrunLabel", "label"], ["startDate", "start"], ["endDate", "end"], ["releaseDate", "release"]]) {
+    const el = document.getElementById(id);
+    el.value = state.meta[key] || "";
+    el.oninput = () => { state.meta[key] = el.value; updatePeriodBadge(); persist(); };
   }
   updatePeriodBadge();
 }
-function updatePeriodBadge(){
-  const b=document.getElementById("periodBadge");
-  b.textContent=state.meta.start && state.meta.end ? `${state.meta.start} → ${state.meta.end}` : "Not set";
+
+function updatePeriodBadge() {
+  const b = document.getElementById("periodBadge");
+  b.textContent = state.meta.start && state.meta.end ? `${state.meta.start} → ${state.meta.end}` : "Not set";
 }
-function renderDashboard(){
-  document.getElementById("statEmployees").textContent=state.employees.filter(e=>e.active!==false).length;
-  const hours=state.employees.reduce((a,e)=>a+Number(e.hours||0),0);
-  const gross=state.results.length ? state.results.reduce((a,r)=>a+r.total,0) : estimateAll().reduce((a,r)=>a+r.total,0);
-  document.getElementById("statHours").textContent=hours.toFixed(2);
-  document.getElementById("statGross").textContent=money(gross);
-  document.getElementById("statAvg").textContent=money(state.employees.length?gross/state.employees.length:0);
-  const log=document.getElementById("activityLog");
-  log.innerHTML=state.activity.length?state.activity.slice(0,8).map(a=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)"><span>${esc(a.text)}</span><small>${esc(a.time)}</small></div>`).join(""):"No activity yet.";
+
+function renderDashboard() {
+  document.getElementById("statEmployees").textContent = state.employees.filter(e => e.active !== false).length;
+  const hours = state.employees.reduce((a, e) => a + Number(e.hours || 0), 0);
+  const gross = state.results.length ? state.results.reduce((a, r) => a + r.total, 0) : estimateAll().reduce((a, r) => a + r.total, 0);
+  document.getElementById("statHours").textContent = hours.toFixed(2);
+  document.getElementById("statGross").textContent = money(gross);
+  document.getElementById("statAvg").textContent = money(state.employees.length ? gross / state.employees.length : 0);
+  const log = document.getElementById("activityLog");
+  log.innerHTML = state.activity.length
+    ? state.activity.slice(0, 8).map(a => `<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)"><span>${esc(a.text)}</span><small>${esc(a.time)}</small></div>`).join("")
+    : "No activity yet.";
 }
-function estimateOne(e){
-  const hrs=Math.max(0,Number(e.hours)||0), std=Math.max(0,Number(e.std)||0), prem=Math.max(0,Number(e.prem)||0);
-  if(e.structure==="flat" || !state.settings.capEnabled || !e.threshold){
-    return {ordinaryHours:0,ordinary:0,premiumHours:hrs,premium:hrs*prem,allowance:state.settings.allowancesEnabled?Number(e.allowance)||0:0,total:hrs*prem+(state.settings.allowancesEnabled?Number(e.allowance)||0:0)};
+
+function estimateOne(e) {
+  const hrs = Math.max(0, Number(e.hours) || 0), std = Math.max(0, Number(e.std) || 0), prem = Math.max(0, Number(e.prem) || 0);
+  const allowance = state.settings.allowancesEnabled ? Number(e.allowance) || 0 : 0;
+  if (e.structure === "flat" || !state.settings.capEnabled || e.threshold == null) {
+    return { ordinaryHours: 0, ordinary: 0, premiumHours: hrs, premium: hrs * prem, allowance, total: hrs * prem + allowance };
   }
-  const t=Math.max(0,Number(e.threshold)||0), oh=Math.min(hrs,t), ph=Math.max(0,hrs-t);
-  const allowance=state.settings.allowancesEnabled?Number(e.allowance)||0:0;
-  return {ordinaryHours:oh,ordinary:oh*std,premiumHours:ph,premium:ph*prem,allowance,total:oh*std+ph*prem+allowance};
+  const t = Math.max(0, Number(e.threshold) || 0);
+  const oh = Math.min(hrs, t);
+  const ph = Math.max(0, hrs - t);
+  return { ordinaryHours: oh, ordinary: oh * std, premiumHours: ph, premium: ph * prem, allowance, total: oh * std + ph * prem + allowance };
 }
-function estimateAll(){return state.employees.filter(e=>e.active!==false).map(estimateOne)}
 
-function renderRoster(){
-  const q=(document.getElementById("employeeSearch").value||"").toLowerCase();
-  const f=document.getElementById("structureFilter").value;
-  const rows=state.employees.filter(e=>(e.name||"").toLowerCase().includes(q)&&(f==="all"||e.structure===f));
-  const body=document.getElementById("rosterBody");
-  if(!rows.length){body.innerHTML=`<tr><td colspan="10" class="empty">No employees match your filters.</td></tr>`;return}
-  body.innerHTML=rows.map(e=>{
-    const thresholdOptions=[...new Set([...state.settings.thresholds,48,76].filter(x=>Number(x)>0))].sort((a,b)=>a-b);
-    const tOpts=e.threshold==null?`<option value="none" selected>No cap</option>`+thresholdOptions.map(t=>`<option value="${t}">${t}h</option>`).join(""):`<option value="none">No cap</option>`+thresholdOptions.map(t=>`<option value="${t}" ${Number(e.threshold)===Number(t)?"selected":""}>${t}h</option>`).join("");
+function estimateAll() {
+  return state.employees.filter(e => e.active !== false).map(estimateOne);
+}
+
+function updateSelectAllState() {
+  const selectAll = document.getElementById("selectAll");
+  if (!selectAll) return;
+  if (!state.employees.length) {
+    selectAll.checked = false;
+    selectAll.indeterminate = false;
+    return;
+  }
+  const selectedCount = state.employees.filter(e => e.selected).length;
+  selectAll.checked = selectedCount === state.employees.length;
+  selectAll.indeterminate = selectedCount > 0 && selectedCount < state.employees.length;
+}
+
+function renderRoster() {
+  const q = (document.getElementById("employeeSearch").value || "").toLowerCase().trim();
+  const f = document.getElementById("structureFilter").value;
+  const rows = state.employees.filter(e => (e.name || "").toLowerCase().includes(q) && (f === "all" || e.structure === f));
+  const body = document.getElementById("rosterBody");
+  
+  if (!rows.length) {
+    body.innerHTML = `<tr><td colspan="10" class="empty">No employees match your filters.</td></tr>`;
+    document.getElementById("rosterCount").textContent = "0 employees";
+    updateSelectAllState();
+    return;
+  }
+
+  const thresholdOptions = [...new Set([...state.settings.thresholds, 48, 76].filter(x => Number(x) > 0))].sort((a, b) => a - b);
+
+  body.innerHTML = rows.map(e => {
+    const tOpts = e.threshold == null
+      ? `<option value="none" selected>No cap</option>` + thresholdOptions.map(t => `<option value="${t}">${t}h</option>`).join("")
+      : `<option value="none">No cap</option>` + thresholdOptions.map(t => `<option value="${t}" ${Number(e.threshold) === Number(t) ? "selected" : ""}>${t}h</option>`).join("");
+
     return `<tr data-id="${e.id}">
-      <td><input type="checkbox" ${e.selected?"checked":""} onchange="toggleSelected('${e.id}',this.checked)"></td>
-      <td><input value="${esc(e.name)}" onchange="editEmp('${e.id}','name',this.value)" style="min-width:180px;font-weight:700"></td>
-      <td><select onchange="editEmp('${e.id}','structure',this.value);renderRoster()"><option value="tiered" ${e.structure==="tiered"?"selected":""}>Tiered</option><option value="flat" ${e.structure==="flat"?"selected":""}>Flat</option></select></td>
-      <td><input type="number" min="0" step=".1" value="${e.hours}" onchange="editEmp('${e.id}','hours',this.value)" style="width:84px"></td>
-      <td><input type="number" min="0" step=".01" value="${e.std}" ${e.structure==="flat"?"disabled":""} onchange="editEmp('${e.id}','std',this.value)" style="width:100px"></td>
-      <td><input type="number" min="0" step=".01" value="${e.prem}" onchange="editEmp('${e.id}','prem',this.value)" style="width:100px"></td>
-      <td><select onchange="editEmp('${e.id}','threshold',this.value)" ${e.structure==="flat"?"disabled":""}>${tOpts}</select></td>
-      <td><input type="number" min="0" step=".01" value="${e.allowance||0}" ${!state.settings.allowancesEnabled?"disabled":""} onchange="editEmp('${e.id}','allowance',this.value)" style="width:100px"></td>
-      <td>${e.active!==false?'<span class="badge green">Active</span>':'<span class="badge gray">Inactive</span>'}</td>
-      <td><div class="row-actions"><button class="btn mini" onclick="duplicateEmployee('${e.id}')">Copy</button><button class="btn mini danger" onclick="deleteEmployee('${e.id}')">Delete</button></div></td>
-    </tr>`
+      <td><input type="checkbox" ${e.selected ? "checked" : ""} data-id="${e.id}" data-field="selected"></td>
+      <td><input value="${esc(e.name)}" data-id="${e.id}" data-field="name" style="min-width:180px;font-weight:700"></td>
+      <td><select data-id="${e.id}" data-field="structure"><option value="tiered" ${e.structure === "tiered" ? "selected" : ""}>Tiered</option><option value="flat" ${e.structure === "flat" ? "selected" : ""}>Flat</option></select></td>
+      <td><input type="number" min="0" step=".1" value="${e.hours}" data-id="${e.id}" data-field="hours" style="width:84px"></td>
+      <td><input type="number" min="0" step=".01" value="${e.std}" ${e.structure === "flat" ? "disabled" : ""} data-id="${e.id}" data-field="std" style="width:100px"></td>
+      <td><input type="number" min="0" step=".01" value="${e.prem}" data-id="${e.id}" data-field="prem" style="width:100px"></td>
+      <td><select data-id="${e.id}" data-field="threshold" ${e.structure === "flat" ? "disabled" : ""}>${tOpts}</select></td>
+      <td><input type="number" min="0" step=".01" value="${e.allowance || 0}" ${!state.settings.allowancesEnabled ? "disabled" : ""} data-id="${e.id}" data-field="allowance" style="width:100px"></td>
+      <td>${e.active !== false ? '<span class="badge green">Active</span>' : '<span class="badge gray">Inactive</span>'}</td>
+      <td><div class="row-actions"><button class="btn mini" data-action="duplicate" data-id="${e.id}">Copy</button><button class="btn mini danger" data-action="delete" data-id="${e.id}">Delete</button></div></td>
+    </tr>`;
   }).join("");
-  document.getElementById("rosterCount").textContent=`${state.employees.length} employee${state.employees.length===1?"":"s"}`;
-}
-function editEmp(id,key,val){
-  const e=state.employees.find(x=>x.id===id); if(!e)return;
-  e[key]=["hours","std","prem","allowance"].includes(key)?Number(val)||0:key==="threshold"?(val==="none"?null:Number(val)):val;
-  persist(); renderDashboard();
-}
-function addEmployee(){
-  state.employees.push({id:uid(),name:"New Employee",structure:state.settings.defaultStructure,hours:0,std:Number(state.settings.defaultStd)||0,prem:Number(state.settings.defaultPrem)||0,threshold:state.settings.capEnabled?Number(state.settings.defaultThreshold)||76:null,allowance:Number(state.settings.defaultAllowance)||0,active:true,selected:false});
-  logActivity("Added a new employee"); renderRoster(); persist();
-}
-function duplicateEmployee(id){
-  const e=state.employees.find(x=>x.id===id); if(!e)return;
-  state.employees.push({...e,id:uid(),name:e.name+" (Copy)",selected:false}); logActivity(`Duplicated ${e.name}`); renderRoster();persist();
-}
-function deleteEmployee(id){
-  const e=state.employees.find(x=>x.id===id); if(!e)return;
-  if(!confirm(`Delete ${e.name}?`))return;
-  state.employees=state.employees.filter(x=>x.id!==id); logActivity(`Deleted ${e.name}`); renderRoster();renderDashboard();persist();
-}
-function toggleSelected(id,val){const e=state.employees.find(x=>x.id===id);if(e)e.selected=val;persist()}
-function toggleAll(val){state.employees.forEach(e=>e.selected=val);renderRoster();persist()}
-function selected(){return state.employees.filter(e=>e.selected)}
-function deleteSelected(){
-  const s=selected();if(!s.length){alert("Select at least one employee.");return}
-  if(confirm(`Delete ${s.length} selected employee(s)?`)){state.employees=state.employees.filter(e=>!e.selected);logActivity(`Deleted ${s.length} selected employee(s)`);renderRoster();renderDashboard();persist()}
-}
-function duplicateSelected(){
-  const s=selected();if(!s.length){alert("Select at least one employee.");return}
-  s.forEach(e=>state.employees.push({...e,id:uid(),name:e.name+" (Copy)",selected:false}));
-  logActivity(`Duplicated ${s.length} employee(s)`);renderRoster();persist();
+
+  document.getElementById("rosterCount").textContent = `${state.employees.length} employee${state.employees.length === 1 ? "" : "s"}`;
+  updateSelectAllState();
 }
 
-function validate(){
-  const errors=[];
-  if(!state.meta.start)errors.push("Fortnight start date is missing.");
-  if(!state.meta.release)errors.push("Pay release date is missing.");
-  state.employees.filter(e=>e.active!==false).forEach(e=>{
-    if(!e.name.trim())errors.push("An employee name is blank.");
-    if(Number(e.hours)<0)errors.push(`${e.name}: hours cannot be negative.`);
-    if(Number(e.std)<0 || Number(e.prem)<0)errors.push(`${e.name}: rates cannot be negative.`);
-    if(e.structure==="tiered" && state.settings.capEnabled && (!e.threshold || Number(e.threshold)<0))errors.push(`${e.name}: tiered employees need a threshold.`);
+document.getElementById('rosterBody').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const id = btn.dataset.id;
+  if (action === 'delete') deleteEmployee(id);
+  if (action === 'duplicate') duplicateEmployee(id);
+});
+
+document.getElementById('rosterBody').addEventListener('input', (e) => {
+  const input = e.target;
+  const field = input.dataset.field;
+  const id = input.dataset.id;
+  if (!id || !field) return;
+
+  const emp = state.employees.find(x => x.id === id);
+  if (!emp) return;
+
+  if (field === 'name') emp.name = input.value;
+  else if (field === 'hours') emp.hours = Math.max(0, Number(input.value) || 0);
+  else if (field === 'std') emp.std = Math.max(0, Number(input.value) || 0);
+  else if (field === 'prem') emp.prem = Math.max(0, Number(input.value) || 0);
+  else if (field === 'allowance') emp.allowance = Math.max(0, Number(input.value) || 0);
+
+  persist();
+  renderDashboard();
+});
+
+document.getElementById('rosterBody').addEventListener('change', (e) => {
+  const input = e.target;
+  const field = input.dataset.field;
+  const id = input.dataset.id;
+  if (!id || !field) return;
+
+  const emp = state.employees.find(x => x.id === id);
+  if (!emp) return;
+
+  if (field === 'structure') {
+    emp.structure = input.value;
+    renderRoster();
+  } else if (field === 'threshold') {
+    emp.threshold = input.value === 'none' ? null : Number(input.value);
+  } else if (field === 'selected') {
+    emp.selected = input.checked;
+    updateSelectAllState();
+  }
+  persist();
+  renderDashboard();
+});
+
+function addEmployee() {
+  state.employees.push({
+    id: uid(),
+    name: "New Employee",
+    structure: state.settings.defaultStructure,
+    hours: 0,
+    std: Number(state.settings.defaultStd) || 0,
+    prem: Number(state.settings.defaultPrem) || 0,
+    threshold: state.settings.capEnabled ? (Number(state.settings.defaultThreshold) || 76) : null,
+    allowance: Number(state.settings.defaultAllowance) || 0,
+    active: true,
+    selected: false
+  });
+  logActivity("Added a new employee");
+  renderRoster();
+  renderDashboard();
+  persist();
+}
+
+function duplicateEmployee(id) {
+  const e = state.employees.find(x => x.id === id);
+  if (!e) return;
+  state.employees.push({ ...e, id: uid(), name: e.name + " (Copy)", selected: false });
+  logActivity(`Duplicated ${e.name}`);
+  renderRoster();
+  renderDashboard();
+  persist();
+}
+
+function deleteEmployee(id) {
+  const e = state.employees.find(x => x.id === id);
+  if (!e) return;
+  if (!confirm(`Delete ${e.name}?`)) return;
+  state.employees = state.employees.filter(x => x.id !== id);
+  logActivity(`Deleted ${e.name}`);
+  renderRoster();
+  renderDashboard();
+  persist();
+}
+
+function toggleAll(val) {
+  state.employees.forEach(e => e.selected = val);
+  renderRoster();
+  persist();
+}
+
+function selected() {
+  return state.employees.filter(e => e.selected);
+}
+
+function deleteSelected() {
+  const s = selected();
+  if (!s.length) {
+    alert("Select at least one employee.");
+    return;
+  }
+  if (confirm(`Delete ${s.length} selected employee(s)?`)) {
+    state.employees = state.employees.filter(e => !e.selected);
+    logActivity(`Deleted ${s.length} selected employee(s)`);
+    renderRoster();
+    renderDashboard();
+    persist();
+  }
+}
+
+function duplicateSelected() {
+  const s = selected();
+  if (!s.length) {
+    alert("Select at least one employee.");
+    return;
+  }
+  s.forEach(e => state.employees.push({ ...e, id: uid(), name: e.name + " (Copy)", selected: false }));
+  logActivity(`Duplicated ${s.length} employee(s)`);
+  renderRoster();
+  renderDashboard();
+  persist();
+}
+
+function validate() {
+  const errors = [];
+  if (!state.meta.start) errors.push("Fortnight start date is missing.");
+  if (!state.meta.release) errors.push("Pay release date is missing.");
+  state.employees.filter(e => e.active !== false).forEach(e => {
+    if (!e.name.trim()) errors.push("An employee name is blank.");
+    if (Number(e.hours) < 0) errors.push(`${e.name}: hours cannot be negative.`);
+    if (Number(e.std) < 0 || Number(e.prem) < 0) errors.push(`${e.name}: rates cannot be negative.`);
+    if (e.structure === "tiered" && state.settings.capEnabled && (!e.threshold || Number(e.threshold) < 0)) errors.push(`${e.name}: tiered employees need a threshold.`);
   });
   return errors;
 }
 
-function openHoursForPayrun(){
-  const active = state.employees.filter(e=>e.active!==false);
+function openHoursForPayrun() {
+  const active = state.employees.filter(e => e.active !== false);
   const body = document.getElementById("hoursPayrunBody");
-  body.innerHTML = active.map(e=>{
-    const rate = e.structure==="flat" ? Number(e.prem)||0 : Number(e.std)||0;
-    const estimate = Number(e.hours||0) * rate;
+  body.innerHTML = active.map(e => {
+    const est = estimateOne(e);
     return `<tr>
       <td><b>${esc(e.name)}</b></td>
-      <td>${e.structure==="flat" ? "Flat Rate" : "Tiered"}</td>
-      <td><input type="number" min="0" step="0.1" value="${Number(e.hours||0)}"
+      <td>${e.structure === "flat" ? "Flat Rate" : "Tiered (" + (e.threshold || 76) + "h)"}</td>
+      <td><input type="number" min="0" step="0.1" value="${Number(e.hours || 0)}"
           data-hours-id="${e.id}" oninput="updateHoursModalTotal()"
           style="width:110px;font-weight:700"></td>
-      <td>${money(rate)}/hr</td>
-      <td id="estimate-${e.id}">${money(estimate)}</td>
+      <td>${e.structure === "flat" ? money(e.prem) + "/hr" : money(e.std) + " / " + money(e.prem)}</td>
+      <td id="estimate-${e.id}">${money(est.total)}</td>
     </tr>`;
   }).join("") || `<tr><td colspan="5" class="empty">No active employees.</td></tr>`;
   updateHoursModalTotal();
   document.getElementById("hoursModal").classList.add("show");
 }
 
-function updateHoursModalTotal(){
+function updateHoursModalTotal() {
   const inputs = document.querySelectorAll("#hoursPayrunBody input[data-hours-id]");
-  let total = 0;
-  inputs.forEach(input=>{
-    total += Math.max(0, Number(input.value)||0);
-    const e = state.employees.find(x=>x.id===input.dataset.hoursId);
-    if(e){
-      const rate = e.structure==="flat" ? Number(e.prem)||0 : Number(e.std)||0;
-      const estimate = Math.max(0, Number(input.value)||0) * rate;
-      const cell = document.getElementById("estimate-"+e.id);
-      if(cell) cell.textContent = money(estimate);
+  let totalHours = 0;
+  inputs.forEach(input => {
+    const hrs = Math.max(0, Number(input.value) || 0);
+    totalHours += hrs;
+    const e = state.employees.find(x => x.id === input.dataset.hoursId);
+    if (e) {
+      const tempEmp = { ...e, hours: hrs };
+      const est = estimateOne(tempEmp);
+      const cell = document.getElementById("estimate-" + e.id);
+      if (cell) cell.textContent = money(est.total);
     }
   });
-  document.getElementById("hoursPayrunTotal").textContent = `Total Hours: ${total.toFixed(2)}`;
+  document.getElementById("hoursPayrunTotal").textContent = `Total Hours: ${totalHours.toFixed(2)}`;
 }
 
-function calculateFromHoursModal(){
-  document.querySelectorAll("#hoursPayrunBody input[data-hours-id]").forEach(input=>{
-    const e = state.employees.find(x=>x.id===input.dataset.hoursId);
-    if(e) e.hours = Math.max(0, Number(input.value)||0);
+function calculateFromHoursModal() {
+  document.querySelectorAll("#hoursPayrunBody input[data-hours-id]").forEach(input => {
+    const e = state.employees.find(x => x.id === input.dataset.hoursId);
+    if (e) e.hours = Math.max(0, Number(input.value) || 0);
   });
   persist();
   closeHoursForPayrun();
   runPayroll();
 }
 
-function closeHoursForPayrun(){
+function closeHoursForPayrun() {
   document.getElementById("hoursModal").classList.remove("show");
 }
 
-function runPayroll(){
-  const errors=validate();
-  const notice=document.getElementById("resultNotice");
-  if(errors.length){
-    notice.innerHTML=`<div class="notice danger-note"><b>Please fix these items:</b><br>${errors.slice(0,8).map(x=>`• ${esc(x)}`).join("<br>")}</div>`;
-    switchSection("results"); return;
+function runPayroll() {
+  const errors = validate();
+  const notice = document.getElementById("resultNotice");
+  if (errors.length) {
+    notice.innerHTML = `<div class="notice danger-note"><b>Please fix these items:</b><br>${errors.slice(0, 8).map(x => `• ${esc(x)}`).join("<br>")}</div>`;
+    switchSection("results");
+    return;
   }
-  state.results=state.employees.filter(e=>e.active!==false).map(e=>({name:e.name,structure:e.structure,threshold:e.threshold,...estimateOne(e)}));
-  const ordH=state.results.reduce((a,r)=>a+r.ordinaryHours,0), premH=state.results.reduce((a,r)=>a+r.premiumHours,0), allowances=state.results.reduce((a,r)=>a+r.allowance,0), gross=state.results.reduce((a,r)=>a+r.total,0);
-  document.getElementById("resultsMeta").textContent=`${state.meta.label||"Payrun"} • ${state.meta.start||"No start"} → ${state.meta.end||"No end"} • Release ${state.meta.release||"Not set"}`;
-  document.getElementById("resultNotice").innerHTML=`<div class="notice"><b>Calculation complete.</b> ${state.results.length} employees processed using the current configurable pay rules.</div>`;
-  document.getElementById("resultsBody").innerHTML=state.results.map(r=>`<tr><td><b>${esc(r.name)}</b></td><td>${r.structure==="flat"?"Flat":"Tiered ("+r.threshold+"h)"}</td><td>${r.ordinaryHours.toFixed(2)}</td><td>${money(r.ordinary)}</td><td>${r.premiumHours.toFixed(2)}</td><td>${money(r.premium)}</td><td>${money(r.allowance)}</td><td><b>${money(r.total)}</b></td></tr>`).join("")||`<tr><td colspan="8" class="empty">No active employees.</td></tr>`;
-  document.getElementById("resultOrdHours").textContent=ordH.toFixed(2);
-  document.getElementById("resultPremHours").textContent=premH.toFixed(2);
-  document.getElementById("resultAllowances").textContent=money(allowances);
-  document.getElementById("resultGross").textContent=money(gross);
-  logActivity(`Calculated payrun: ${money(gross)} gross`); renderDashboard(); switchSection("results"); persist();
+  state.results = state.employees.filter(e => e.active !== false).map(e => ({ name: e.name, structure: e.structure, threshold: e.threshold, ...estimateOne(e) }));
+  const ordH = state.results.reduce((a, r) => a + r.ordinaryHours, 0);
+  const premH = state.results.reduce((a, r) => a + r.premiumHours, 0);
+  const allowances = state.results.reduce((a, r) => a + r.allowance, 0);
+  const gross = state.results.reduce((a, r) => a + r.total, 0);
+
+  document.getElementById("resultsMeta").textContent = `${state.meta.label || "Payrun"} • ${state.meta.start || "No start"} → ${state.meta.end || "No end"} • Release ${state.meta.release || "Not set"}`;
+  document.getElementById("resultNotice").innerHTML = `<div class="notice"><b>Calculation complete.</b> ${state.results.length} employees processed using the current configurable pay rules.</div>`;
+  document.getElementById("resultsBody").innerHTML = state.results.map(r => `<tr><td><b>${esc(r.name)}</b></td><td>${r.structure === "flat" ? "Flat" : "Tiered (" + (r.threshold || 76) + "h)"}</td><td>${r.ordinaryHours.toFixed(2)}</td><td>${money(r.ordinary)}</td><td>${r.premiumHours.toFixed(2)}</td><td>${money(r.premium)}</td><td>${money(r.allowance)}</td><td><b>${money(r.total)}</b></td></tr>`).join("") || `<tr><td colspan="8" class="empty">No active employees.</td></tr>`;
+  document.getElementById("resultOrdHours").textContent = ordH.toFixed(2);
+  document.getElementById("resultPremHours").textContent = premH.toFixed(2);
+  document.getElementById("resultAllowances").textContent = money(allowances);
+  document.getElementById("resultGross").textContent = money(gross);
+  logActivity(`Calculated payrun: ${money(gross)} gross`);
+  renderDashboard();
+  switchSection("results");
+  persist();
 }
-function logActivity(text){state.activity.unshift({text,time:new Date().toLocaleString()});state.activity=state.activity.slice(0,20)}
-function exportCSV(){
-  const rows=state.results.length?state.results:estimateAll().map((r,i)=>({name:state.employees[i].name,structure:state.employees[i].structure,...r}));
-  if(!rows.length){alert("There is no employee data to export.");return}
-  const headers=["Employee","Structure","Ordinary Hours","Ordinary Gross","Premium Hours","Premium Gross","Allowance","Total Gross"];
-  const data=[headers,...rows.map(r=>[r.name,r.structure,r.ordinaryHours.toFixed(2),r.ordinary.toFixed(2),r.premiumHours.toFixed(2),r.premium.toFixed(2),r.allowance.toFixed(2),r.total.toFixed(2)])];
-  const csv=data.map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
-  downloadBlob(csv,"payrun-results.csv","text/csv");
-  logActivity("Exported payrun CSV");persist();
+
+function logActivity(text) {
+  state.activity.unshift({ text, time: new Date().toLocaleString() });
+  state.activity = state.activity.slice(0, 20);
 }
-function downloadBlob(text,name,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
-function importCSV(){
+
+function exportCSV() {
+  const rows = state.results.length ? state.results : estimateAll().map((r, i) => ({ name: state.employees[i].name, structure: state.employees[i].structure, ...r }));
+  if (!rows.length) { alert("There is no employee data to export."); return; }
+  const headers = ["Employee", "Structure", "Ordinary Hours", "Ordinary Gross", "Premium Hours", "Premium Gross", "Allowance", "Total Gross"];
+  const data = [headers, ...rows.map(r => [r.name, r.structure, r.ordinaryHours.toFixed(2), r.ordinary.toFixed(2), r.premiumHours.toFixed(2), r.premium.toFixed(2), r.allowance.toFixed(2), r.total.toFixed(2)])];
+  const csv = data.map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+  downloadBlob(csv, "payrun-results.csv", "text/csv");
+  logActivity("Exported payrun CSV");
+  persist();
+}
+
+function downloadBlob(text, name, type) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], { type }));
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 500);
+}
+
+function importCSV() {
   document.getElementById("csvFile").click();
 }
-document.getElementById("csvFile").addEventListener("change",async e=>{
-  const f=e.target.files[0]; if(!f)return;
-  const text=await f.text(); const lines=text.split(/\r?\n/).filter(Boolean);
-  if(lines.length<2){alert("CSV has no data rows.");return}
-  const parse=line=>line.split(",").map(x=>x.trim().replace(/^"|"$/g,"").replace(/""/g,'"'));
-  const heads=parse(lines[0]).map(x=>x.toLowerCase());
-  const idx=k=>heads.findIndex(h=>h.includes(k));
-  const mapped=lines.slice(1).map(line=>{const c=parse(line);return {id:uid(),name:c[idx("employee")]||"Imported Employee",structure:(c[idx("structure")]||"tiered").toLowerCase().includes("flat")?"flat":"tiered",hours:Number(c[idx("hours")])||0,std:Number(c[idx("standard")])||0,prem:Number(c[idx("premium")])||0,threshold:heads.some(h=>h.includes("threshold"))?(c[idx("threshold")]||"none")==="none"?null:Number(c[idx("threshold")])||76:76,allowance:Number(c[idx("allowance")])||0,active:true,selected:false}});
-  state.employees=mapped;logActivity(`Imported ${mapped.length} employees from CSV`);renderRoster();renderDashboard();persist();e.target.value="";
+
+document.getElementById("csvFile").addEventListener("change", async e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const text = await f.text();
+  const lines = text.split(/\r?\n/).filter(Boolean);
+  if (lines.length < 2) { alert("CSV has no data rows."); return; }
+  const parse = line => line.split(",").map(x => x.trim().replace(/^"|"$/g, "").replace(/""/g, '"'));
+  const heads = parse(lines[0]).map(x => x.toLowerCase());
+  const idx = k => heads.findIndex(h => h.includes(k));
+  const mapped = lines.slice(1).map(line => {
+    const c = parse(line);
+    return {
+      id: uid(),
+      name: c[idx("employee")] || "Imported Employee",
+      structure: (c[idx("structure")] || "tiered").toLowerCase().includes("flat") ? "flat" : "tiered",
+      hours: Number(c[idx("hours")]) || 0,
+      std: Number(c[idx("standard")]) || 0,
+      prem: Number(c[idx("premium")]) || 0,
+      threshold: heads.some(h => h.includes("threshold")) ? ((c[idx("threshold")] || "none") === "none" ? null : Number(c[idx("threshold")]) || 76) : 76,
+      allowance: Number(c[idx("allowance")]) || 0,
+      active: true,
+      selected: false
+    };
+  });
+  state.employees = mapped;
+  logActivity(`Imported ${mapped.length} employees from CSV`);
+  renderRoster();
+  renderDashboard();
+  persist();
+  e.target.value = "";
 });
-function saveSnapshot(){persist();logActivity("Saved workspace snapshot");renderDashboard();alert("Workspace saved locally in this browser.")}
-function applyPreset(type){
-  if(type==="hospitality"){state.settings.defaultStructure="tiered";state.settings.defaultStd=25;state.settings.defaultPrem=20;state.settings.defaultThreshold=76;state.settings.capEnabled=true}
-  if(type==="simple"){state.settings.defaultStructure="flat";state.settings.defaultStd=0;state.settings.defaultPrem=25;state.settings.defaultThreshold=76;state.settings.capEnabled=false}
-  if(type==="custom"){state.settings.defaultStructure="tiered";state.settings.defaultStd=30;state.settings.defaultPrem=25;state.settings.defaultThreshold=48;state.settings.capEnabled=true}
-  renderRules();logActivity(`Applied ${type} preset`);renderDashboard();persist();
+
+function saveSnapshot() {
+  persist();
+  logActivity("Saved workspace snapshot");
+  renderDashboard();
+  alert("Workspace saved locally in this browser.");
 }
-function renderRules(){
-  for(const [id,key] of [["defaultStructure","defaultStructure"],["defaultStd","defaultStd"],["defaultPrem","defaultPrem"],["defaultThreshold","defaultThreshold"],["defaultAllowance","defaultAllowance"],["currency","currency"],["capEnabled","capEnabled"],["allowancesEnabled","allowancesEnabled"]]){
-    const el=document.getElementById(id); if(!el)continue; el.type==="checkbox"?el.checked=!!state.settings[key]:el.value=state.settings[key];
-    el.oninput=el.onchange=()=>{state.settings[key]=el.type==="checkbox"?el.checked:(["defaultStd","defaultPrem","defaultThreshold","defaultAllowance"].includes(key)?Number(el.value)||0:el.value);renderDashboard();persist()};
+
+function applyPreset(type) {
+  if (type === "hospitality") { state.settings.defaultStructure = "tiered"; state.settings.defaultStd = 25; state.settings.defaultPrem = 20; state.settings.defaultThreshold = 76; state.settings.capEnabled = true; }
+  if (type === "simple") { state.settings.defaultStructure = "flat"; state.settings.defaultStd = 0; state.settings.defaultPrem = 25; state.settings.defaultThreshold = 76; state.settings.capEnabled = false; }
+  if (type === "custom") { state.settings.defaultStructure = "tiered"; state.settings.defaultStd = 30; state.settings.defaultPrem = 25; state.settings.defaultThreshold = 48; state.settings.capEnabled = true; }
+  renderRules();
+  logActivity(`Applied ${type} preset`);
+  renderDashboard();
+  persist();
+}
+
+function renderRules() {
+  for (const [id, key] of [["defaultStructure", "defaultStructure"], ["defaultStd", "defaultStd"], ["defaultPrem", "defaultPrem"], ["defaultThreshold", "defaultThreshold"], ["defaultAllowance", "defaultAllowance"], ["currency", "currency"], ["capEnabled", "capEnabled"], ["allowancesEnabled", "allowancesEnabled"]]) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    el.type === "checkbox" ? el.checked = !!state.settings[key] : el.value = state.settings[key];
+    el.oninput = el.onchange = () => {
+      state.settings[key] = el.type === "checkbox" ? el.checked : (["defaultStd", "defaultPrem", "defaultThreshold", "defaultAllowance"].includes(key) ? Number(el.value) || 0 : el.value);
+      renderDashboard();
+      persist();
+    };
   }
-  document.getElementById("thresholdList").innerHTML=state.settings.thresholds.map((t,i)=>`<div class="field"><label>Threshold ${i+1}</label><div class="pill-input"><input type="number" min="0" step=".1" value="${t}" onchange="state.settings.thresholds[${i}]=Number(this.value)||0;persist();renderRoster()"><button class="btn mini danger" onclick="state.settings.thresholds.splice(${i},1);renderRules();renderRoster();persist()">Remove</button></div></div>`).join("");
+  document.getElementById("thresholdList").innerHTML = state.settings.thresholds.map((t, i) => `<div class="field"><label>Threshold ${i + 1}</label><div class="pill-input"><input type="number" min="0" step=".1" value="${t}" onchange="state.settings.thresholds[${i}]=Number(this.value)||0;persist();renderRoster()"><button class="btn mini danger" onclick="state.settings.thresholds.splice(${i},1);renderRules();renderRoster();persist()">Remove</button></div></div>`).join("");
 }
-function addThreshold(){state.settings.thresholds.push(Math.max(...state.settings.thresholds,0)+24);renderRules();persist()}
-function openSettings(){
-  document.getElementById("businessName").value=state.settings.businessName;
-  document.getElementById("reportSubtitle").value=state.settings.subtitle;
-  document.getElementById("autosave").checked=state.settings.autosave;
-  document.getElementById("themeSelect").value=state.settings.theme;
-  document.getElementById("colorChoices").innerHTML=accentChoices.map(c=>`<button class="swatch" style="background:${c};${c===state.settings.accent?"box-shadow:0 0 0 2px var(--text)":""}" onclick="chooseAccent('${c}')"></button>`).join("");
+
+function addThreshold() {
+  state.settings.thresholds.push(Math.max(...state.settings.thresholds, 0) + 24);
+  renderRules();
+  persist();
+}
+
+function openSettings() {
+  document.getElementById("businessName").value = state.settings.businessName;
+  document.getElementById("reportSubtitle").value = state.settings.subtitle;
+  document.getElementById("autosave").checked = state.settings.autosave;
+  document.getElementById("themeSelect").value = state.settings.theme;
+  document.getElementById("colorChoices").innerHTML = accentChoices.map(c => `<button class="swatch" style="background:${c};${c === state.settings.accent ? "box-shadow:0 0 0 2px var(--text)" : ""}" onclick="chooseAccent('${c}')"></button>`).join("");
   document.getElementById("settingsModal").classList.add("show");
 }
-function chooseAccent(c){state.settings.accent=c;setTheme();openSettings()}
-function closeSettings(){document.getElementById("settingsModal").classList.remove("show")}
-function saveSettings(){
-  state.settings.businessName=document.getElementById("businessName").value.trim()||"Fortnightly Payrun Pro";
-  state.settings.subtitle=document.getElementById("reportSubtitle").value.trim()||"Flexible payroll calculator & payrun workspace";
-  state.settings.autosave=document.getElementById("autosave").checked;
-  state.settings.theme=document.getElementById("themeSelect").value;
-  setTheme();renderHeader();closeSettings();logActivity("Updated workspace settings");persist();renderDashboard();
-}
-function resetApp(){
-  if(!confirm("Reset all local data and restore the original employee roster?"))return;
-  localStorage.removeItem("payrunProState");location.reload();
-}
-function switchSection(name){
-  document.querySelectorAll(".nav-btn[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===name));
-  document.querySelectorAll(".section").forEach(s=>s.classList.toggle("active",s.id==="section-"+name));
-  if(name==="roster")renderRoster();
-  if(name==="dashboard")renderDashboard();
-  if(name==="rules")renderRules();
-}
-document.querySelectorAll(".nav-btn[data-section]").forEach(b=>b.addEventListener("click",()=>switchSection(b.dataset.section)));
-document.getElementById("themeBtn").onclick=()=>{state.settings.theme=document.documentElement.dataset.theme==="dark"?"light":"dark";setTheme();persist()};
-window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(state.settings.theme==="system")setTheme()});
 
-load();setTheme();renderHeader();bindMeta();renderRoster();renderRules();renderDashboard();
+function chooseAccent(c) {
+  state.settings.accent = c;
+  setTheme();
+  openSettings();
+}
+
+function closeSettings() {
+  document.getElementById("settingsModal").classList.remove("show");
+}
+
+function saveSettings() {
+  state.settings.businessName = document.getElementById("businessName").value.trim() || "Fortnightly Payrun Pro";
+  state.settings.subtitle = document.getElementById("reportSubtitle").value.trim() || "Flexible payroll calculator & payrun workspace";
+  state.settings.autosave = document.getElementById("autosave").checked;
+  state.settings.theme = document.getElementById("themeSelect").value;
+  setTheme();
+  renderHeader();
+  closeSettings();
+  logActivity("Updated workspace settings");
+  persist();
+  renderDashboard();
+}
+
+function resetApp() {
+  if (!confirm("Reset all local data and restore the original employee roster?")) return;
+  localStorage.removeItem("payrunProState");
+  location.reload();
+}
+
+function switchSection(name) {
+  document.querySelectorAll(".nav-btn[data-section]").forEach(b => b.classList.toggle("active", b.dataset.section === name));
+  document.querySelectorAll(".section").forEach(s => s.classList.toggle("active", s.id === "section-" + name));
+  if (name === "roster") renderRoster();
+  if (name === "dashboard") renderDashboard();
+  if (name === "rules") renderRules();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll(".nav-btn[data-section]").forEach(b => b.addEventListener("click", () => switchSection(b.dataset.section)));
+document.getElementById("themeBtn").onclick = () => {
+  state.settings.theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  setTheme();
+  persist();
+};
+
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+  if (state.settings.theme === "system") setTheme();
+});
+
+load();
+setTheme();
+renderHeader();
+bindMeta();
+renderRoster();
+renderRules();
+renderDashboard();
 </script>
 </body>
 </html>
